@@ -37,4 +37,21 @@ class Adding extends CI_Controller
 		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">RKSP berhasil ditambahkan</div>');
 		redirect('pengangkut/rksp');
 	}
+
+	public function rksp_accept()
+	{
+		$data = [
+			'ref' => $this->input->post('ref'),
+			'jenis'	=> 'accept_rksp',
+			'nomor' => date('Ymd-His', time()),
+			'doc_date' => strtotime($this->input->post('doc_date')),
+			'user' => $this->session->userdata('user'),
+			'name' => $this->session->userdata('name'),
+			'stamp' => time()
+		];
+		$this->db->insert('tracking', $data);
+
+		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">RKSP berhasil diterima</div>');
+		redirect('pegawai/rksp');
+	}
 }

@@ -24,9 +24,23 @@ class Auth extends CI_Controller {
 			$data['user'] = $this->db->get_where('users', ['user' => $username])->row_array();
 		}
 
+		if (!empty($_SERVER["HTTP_CLIENT_IP"])){
+			$ip_address = $_SERVER["HTTP_CLIENT_IP"];
+		} else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+			$ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
+		} else {
+			$ip_address = $_SERVER["REMOTE_ADDR"];
+		}
+
+		$data['ncookies'] = $this->db->get_where('cookies', ['ip_address' => $ip_address])->num_rows();
+		$data['cookies'] = $this->db->get_where('cookies', ['ip_address' => $ip_address])->result_array();
+
 		if ($type == 'username') $this->form_validation->set_rules('user', 'Username', 'required|trim', ['required' => 'Username belum diisi']);
 		if ($type == 'password') {
 			if ($username == '') redirect('auth');
+
+			$user = $this->db->get_where('users', ['user' => $username])->row_array();
+			if ($user['pass'] === null) redirect('auth/index/reset/'.$username);
 
 			$data['username'] = $username;
 
@@ -148,6 +162,34 @@ class Auth extends CI_Controller {
 	       'sebagai'  => $user['sebagai']
 	    );
         $this->session->set_userdata($session);
+
+        if (!empty($_SERVER["HTTP_CLIENT_IP"])){
+			$ip_address = $_SERVER["HTTP_CLIENT_IP"];
+		} else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+			$ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
+		} else {
+			$ip_address = $_SERVER["REMOTE_ADDR"];
+		}
+
+		$ips = $this->db->get_where('cookies', [
+			'user' => $username,
+			'ip_address' => $ip_address
+		])->num_rows();
+
+		if ($ips == 0) {
+			$insert = [
+				'user' => $username,
+				'ip_address' => $ip_address,
+				'timestamp' => time()
+			];
+
+			$this->db->insert('cookies', $insert);
+		} else {
+			$this->db->set('timestamp', time());
+			$this->db->where('user', $username);
+			$this->db->where('ip_address', $ip_address);
+			$this->db->update('cookies');
+		}
 
 		if($user['sebagai'] == 'pegawai') redirect('pegawai');
 		if($user['sebagai'] == 'pengangkut') redirect('pengangkut');

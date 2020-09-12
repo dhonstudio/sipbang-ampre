@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 date_default_timezone_set('Asia/Jakarta');
 
-class Pengangkut extends CI_Controller 
+class Pegawai extends CI_Controller 
 {
 
 	public function __construct()
@@ -38,8 +38,7 @@ class Pengangkut extends CI_Controller
 		$data['maintitle'] = "Data RKSP"; 
 		$data['user'] = $this->db->get_where('users', ['user' => $this->session->userdata('user')])->row_array();
 
-		$config['base_url'] = base_url('pengangkut/rksp');
-		$this->db->where('user', $this->session->userdata('user'));
+		$config['base_url'] = base_url('pegawai/rksp');
 		$this->db->where('jenis', 'rksp');
 		$this->db->from('tracking');
 		$config['total_rows'] = $this->db->count_all_results();
@@ -52,15 +51,19 @@ class Pengangkut extends CI_Controller
 		$data['pagination'] = $this->pagination->create_links();
 
 		$data['rksp'] = $this->db->order_by('id_tracking', 'DESC')->get_where('tracking', [
-			'user' => $this->session->userdata('user'),
 			'jenis' => 'rksp'
 		], $config['per_page'], $data['page'])->result_array();
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('bodies/rksp', $data);
+		$this->load->view('bodies/rksp_pegawai', $data);
 		$this->load->view('modals/track');
 		$this->load->view('templates/footer');
+	}
+
+	public function getrksp($id)
+	{
+		echo json_encode($this->db->get_where('tracking', ['id_tracking' => $id])->row_array());
 	}
 }

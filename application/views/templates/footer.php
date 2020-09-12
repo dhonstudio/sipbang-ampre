@@ -58,6 +58,29 @@
         document.getElementById("eta").required = true;
       });
 
+      $('.acceptRKSP').on('click', function(){
+        var addAction = '<?= base_url('adding/rksp_accept')?>';
+
+        $('#doc_dateLabel').html('Tanggal Terima');
+        $('#contentModalTrack form').attr('action',addAction);
+        document.getElementById("nomor").hidden = true;
+        document.getElementById("doc_date").required = true;
+        document.getElementById("eta").hidden = true;
+
+        const id = $(this).data('id');
+
+        $.ajax({
+          url: '<?= base_url('pegawai/getrksp/')?>' + id,
+          type: 'get',
+          dataType: 'JSON',
+          success: function(data) {
+              $('#id_doc').val(data.id_tracking);
+              $('#ref').val(data.ref);
+              $('#modalTrackLabel').html('Terima Dokumen RKSP nomor '+data.nomor);
+          }
+        });
+      });
+
       $('.addManifes').on('click', function(){
         var addAction = '<?= base_url('adding/manifes')?>';
 

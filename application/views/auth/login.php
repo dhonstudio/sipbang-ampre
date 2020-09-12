@@ -12,19 +12,25 @@
                     <h6 class="mb-0"><b>SIP Bang</b></h6>
                     <h6><small>Sistem Informasi Pergerakan Barang</small></h6>
                     <h4>
-                      <b><?php
-                      if($type == 'username') echo "Masukkan Username"; 
-                      else echo $user['name'];
+                      <b id="usernameLabel" <?php if ($type == "username" && $ncookies > 0) echo "hidden";?>><?php
+                      if($type == 'username') {
+                        echo "Masukkan Username";
+                      } else {
+                        echo $user['name'];
+                      }
                       ?></b>
+                      <b id="chooseLabel" <?php if ($type != "username" || $ncookies == 0) echo "hidden";?>>
+                        Pilih Akun
+                      </b>
                     </h4>
                   </div>
 
                   <?= $this->session->flashdata('message');?>
 
-                  <form class="user" method="post" action="<?= base_url('auth');?><?php 
+                  <form id="username" class="user" method="post" action="<?= base_url('auth');?><?php
                   if ($type == 'password') echo '/index/password/'.$username;
                   if ($type == 'reset') echo '/index/reset/'.$username;
-                  ?>">
+                  ?>" <?php if ($type == "username" && $ncookies > 0) echo "hidden";?>>
                     
                     <div class="form-group" <?php if($type != 'username') echo "hidden";?>>
                       <input type="text" class="form-control py-4" id="user" name="user" placeholder="Username" maxlength="20" value="<?= set_value('user');?>">
@@ -45,6 +51,21 @@
                         <button type="submit" class="btn btn-primary"><small class="font-weight-bold">Berikutnya</small></button>
                     </div>
                     
+                  </form>
+
+                  <form id="choose" <?php if ($type != "username" || $ncookies == 0) echo "hidden";?>>
+                    <table class="table table-hover">
+                      <?php foreach ($cookies as $p) : ?>
+                      <tr class="border-bottom">
+                        <td><a href="<?= base_url('auth/index/password');?>/<?= $p['user']?>" class="text-decoration-none"><div class="text-dark"><?= $p['user'];?><br><small><?php $usercookie = $this->db->get_where('users', ['user' => $p['user']])->row_array(); echo $usercookie['name'];?></small></div></a>
+                        </td>
+                      </tr>
+                      <?php endforeach;?>
+                      <tr class="border-bottom">
+                        <td class="text-dark"><a href="#" class="text-decoration-none"><div id="formDisplay" class="text-dark">Gunakan akun lain</div></a>
+                        </td>
+                      </tr>
+                    </table>
                   </form>
                 </div>
               </div>

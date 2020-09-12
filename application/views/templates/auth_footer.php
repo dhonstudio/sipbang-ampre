@@ -16,6 +16,15 @@
   <!-- Script for sb-admin-2-->
   <script src="<?= base_url('assets');?>/vendor/sb-admin-2/js/sb-admin-2.min.js"></script>
 
+  <script>
+    $('#formDisplay').on('click', function(){
+      document.getElementById("username").hidden = false;
+      document.getElementById("usernameLabel").hidden = false;
+      document.getElementById("choose").hidden = true;
+      document.getElementById("chooseLabel").hidden = true;
+    });
+  </script>
+
 </body>
 
 </html>
