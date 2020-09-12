@@ -58,11 +58,13 @@
           </div>
 
           <div class="dropdown togglet_el">
+            
             <a class="nav-link font-weight-bold pt-2 pb-0 px-0 ml-2 mb-2" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <button type="button" class="btn btn-dark pl-4 pr-4">
                 <span>+ Baru</span>
               </button>
             </a>
+
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <?php
                 $sebagai = $user['sebagai'];
@@ -75,16 +77,15 @@
               ?>
 
               <?php foreach ($addMenu as $am) :?>
-              <a class="dropdown-item my-2 py-1" href="#"><?= $am['title'];?></a>
+              <a class="dropdown-item my-2 py-1 <?= $am['url'];?>" data-toggle="modal" data-target="#modalTrack" href="#"><?= $am['title'];?></a>
               <?php endforeach;?>
             </div>
+
           </div>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
-
             
-
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->

@@ -96,6 +96,34 @@ class Auth extends CI_Controller {
 		    );
 	        $this->session->set_userdata($session);
 
+	        if (!empty($_SERVER["HTTP_CLIENT_IP"])){
+				$ip_address = $_SERVER["HTTP_CLIENT_IP"];
+			} else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+				$ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
+			} else {
+				$ip_address = $_SERVER["REMOTE_ADDR"];
+			}
+
+			$ips = $this->db->get_where('cookies', [
+				'user' => $username,
+				'ip_address' => $ip_address
+			])->num_rows();
+
+			if ($ips == 0) {
+				$insert = [
+					'user' => $username,
+					'ip_address' => $ip_address,
+					'timestamp' => time()
+				];
+
+				$this->db->insert('cookies', $insert);
+			} else {
+				$this->db->set('timestamp', time());
+				$this->db->where('user', $username);
+				$this->db->where('ip_address', $ip_address);
+				$this->db->update('cookies');
+			}
+
 			if($user['sebagai'] == 'pegawai') redirect('pegawai');
 			if($user['sebagai'] == 'pengangkut') redirect('pengangkut');
 			if($user['sebagai'] == 'tps') redirect('tps');

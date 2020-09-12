@@ -60,6 +60,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('pengangkut/rksp', $data);
+		$this->load->view('modals/track');
 		$this->load->view('templates/footer');
 	}
 }

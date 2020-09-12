@@ -57,6 +57,18 @@
         document.getElementById("doc_date").required = true;
         document.getElementById("eta").required = true;
       });
+
+      $('.addManifes').on('click', function(){
+        var addAction = '<?= base_url('adding/manifes')?>';
+
+        $('#modalTrackLabel').html('Data Manifes Baru');
+        $('#doc_dateLabel').html('Tanggal Manifes');
+        $('#etaLabel').html('Tanggal Kedatangan');
+        $('#contentModalTrack form').attr('action',addAction);
+        document.getElementById("nomor").required = true;
+        document.getElementById("doc_date").required = true;
+        document.getElementById("eta").required = true;
+      });
     </script>
 
     <script src="<?= base_url('assets');?>/js/script.js"></script>
