@@ -7,58 +7,37 @@ class Auth extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library('form_validation');
+		$this->load->model('Auth_model', 'auth');
 	}
 
 	public function index($type = 'username', $username = '')
 	{
+		$user = $this->auth->getUser($username);
+
 		if ($this->session->userdata('user')) {
-			if($this->session->userdata('sebagai') == 'pegawai') redirect('pegawai');
-			if($this->session->userdata('sebagai') == 'pengangkut') redirect('pengangkut');
-			if($this->session->userdata('sebagai') == 'tps') redirect('tps');
-			if($this->session->userdata('sebagai') == 'importir') redirect('importir');
+			$sebagai = $this->session->userdata('sebagai');
+
+			if($sebagai == 'pegawai') redirect('pegawai');
+			if($sebagai == 'pengangkut') redirect('pengangkut');
+			if($sebagai == 'tps') redirect('tps');
+			if($sebagai == 'importir') redirect('importir');
 		}
-
-		$data['type'] = $type;
-
-		if ($username != '') {
-			$data['user'] = $this->db->get_where('users', ['user' => $username])->row_array();
-		}
-
-		if (!empty($_SERVER["HTTP_CLIENT_IP"])){
-			$ip_address = $_SERVER["HTTP_CLIENT_IP"];
-		} else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
-			$ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
-		} else {
-			$ip_address = $_SERVER["REMOTE_ADDR"];
-		}
-
-		$data['ncookies'] = $this->db->get_where('cookies', ['ip_address' => $ip_address])->num_rows();
-		$data['cookies'] = $this->db->get_where('cookies', ['ip_address' => $ip_address])->result_array();
 
 		if ($type == 'username') $this->form_validation->set_rules('user', 'Username', 'required|trim', ['required' => 'Username belum diisi']);
 		if ($type == 'password') {
 			if ($username == '') redirect('auth');
 
-			$user = $this->db->get_where('users', ['user' => $username])->row_array();
 			if ($user['pass'] === null) redirect('auth/index/reset/'.$username);
-
-			$data['username'] = $username;
 
 			$this->form_validation->set_rules('pass', 'Kata Sandi', 'required|trim', ['required' => 'Kata Sandi belum diisi']);
 		}
 		if ($type == 'reset') {
-			if ($username == '') {
+			if ($username == '') redirect('auth');
+
+			if ($user['pass'] !== null) {
+				$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Anda tidak diizinkan mengatur ulang kata sandi akun ini</div>');
 				redirect('auth');
-			} else {
-				$data['user'] = $this->db->get_where('users', ['user' => $username])->row_array();
-
-				if ($data['user']['pass'] !== null) {
-					$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Anda tidak diizinkan mengatur ulang kata sandi akun ini</div>');
-					redirect('auth');
-				}
 			}
-
-			$data['username'] = $username;
 
 			$this->form_validation->set_rules('pass', 'Password', 'required|trim|min_length[3]', [
 				'required' => 'Kata sandi belum diisi',
@@ -70,7 +49,18 @@ class Auth extends CI_Controller {
 		}
 		
 		if($this->form_validation->run() == false){
-			$data['title'] = 'SIP Bang: Login';
+			if (!empty($_SERVER["HTTP_CLIENT_IP"])) $ip_address = $_SERVER["HTTP_CLIENT_IP"];
+			else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) $ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
+			else $ip_address = $_SERVER["REMOTE_ADDR"];
+
+			$data = [
+				'ncookies' => $this->auth->numCookies($ip_address),
+				'cookies' => $this->auth->getCookies($ip_address),
+				'title' => 'SIP Bang: Login',
+				'type' => $type,
+				'username' => $username,
+				'user' => $user
+			];
 			$this->load->view('templates/auth_header', $data);
 			$this->load->view('auth/login');
 			$this->load->view('templates/auth_footer');
@@ -83,14 +73,15 @@ class Auth extends CI_Controller {
 
 	private function _login()
 	{
-		$user = $this->db->get_where('users', ['user' => $this->input->post('user')])->row_array();
+		$vuser = $this->input->post('user');
+		$user = $this->auth->getUser($vuser);
 		
 		if($user) {
 			if ($user['pass'] !== null) {
-				redirect('auth/index/password/'.$this->input->post('user'));
+				redirect('auth/index/password/'.$vuser);
 			} else {
 				$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Silahkan masukkan password baru</div>');
-				redirect('auth/index/reset/'.$this->input->post('user'));
+				redirect('auth/index/reset/'.$vuser);
 			}
 		} else {
 			$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Tidak dapat menemukan akun Anda</div>');
@@ -100,9 +91,10 @@ class Auth extends CI_Controller {
 
 	private function _pass($username = '')
 	{
-		$user = $this->db->get_where('users', ['user' => $username])->row_array();
+		$pass = $this->input->post('pass');
+		$user = $this->auth->getUser($username);
 
-		if(password_verify($this->input->post('pass'), $user['pass'])){
+		if(password_verify($pass, $user['pass'])){
 		    $session = array(
 		       'user'   => $user['user'],
 		       'name'   => $user['name'],
@@ -110,32 +102,21 @@ class Auth extends CI_Controller {
 		    );
 	        $this->session->set_userdata($session);
 
-	        if (!empty($_SERVER["HTTP_CLIENT_IP"])){
-				$ip_address = $_SERVER["HTTP_CLIENT_IP"];
-			} else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
-				$ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
-			} else {
-				$ip_address = $_SERVER["REMOTE_ADDR"];
-			}
+	        if (!empty($_SERVER["HTTP_CLIENT_IP"])) $ip_address = $_SERVER["HTTP_CLIENT_IP"];
+			else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) $ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
+			else $ip_address = $_SERVER["REMOTE_ADDR"];
 
-			$ips = $this->db->get_where('cookies', [
-				'user' => $username,
-				'ip_address' => $ip_address
-			])->num_rows();
+			$ips = $this->auth->numCookiesByUser($ip_address, $username);
 
 			if ($ips == 0) {
-				$insert = [
+				$dataInsert = [
 					'user' => $username,
-					'ip_address' => $ip_address,
-					'timestamp' => time()
+					'ip_address' => $ip_address
 				];
 
-				$this->db->insert('cookies', $insert);
+				$this->auth->insertCookie($dataInsert);
 			} else {
-				$this->db->set('timestamp', time());
-				$this->db->where('user', $username);
-				$this->db->where('ip_address', $ip_address);
-				$this->db->update('cookies');
+				$this->auth->updateCookie($dataInsert);
 			}
 
 			if($user['sebagai'] == 'pegawai') redirect('pegawai');
@@ -150,11 +131,14 @@ class Auth extends CI_Controller {
 
 	private function _reset($username = '')
 	{
-		$user = $this->db->get_where('users', ['user' => $username])->row_array();
+		$user = $this->auth->getUser($username);
 
-		$this->db->set('pass', password_hash($this->input->post('pass'), PASSWORD_DEFAULT));
-		$this->db->where('user', $user['user']);
-		$this->db->update('users');
+		$dataInsert = [
+			'pass' => password_hash($this->input->post('pass'), PASSWORD_DEFAULT),
+			'user' => $user['user']
+		];
+
+		$this->auth->updateUser($dataInsert);
 
 		$session = array(
 	       'user'   => $user['user'],
@@ -163,32 +147,21 @@ class Auth extends CI_Controller {
 	    );
         $this->session->set_userdata($session);
 
-        if (!empty($_SERVER["HTTP_CLIENT_IP"])){
-			$ip_address = $_SERVER["HTTP_CLIENT_IP"];
-		} else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
-			$ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
-		} else {
-			$ip_address = $_SERVER["REMOTE_ADDR"];
-		}
+        if (!empty($_SERVER["HTTP_CLIENT_IP"])) $ip_address = $_SERVER["HTTP_CLIENT_IP"];
+		else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) $ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
+		else $ip_address = $_SERVER["REMOTE_ADDR"];
 
-		$ips = $this->db->get_where('cookies', [
-			'user' => $username,
-			'ip_address' => $ip_address
-		])->num_rows();
+		$ips = $this->auth->numCookiesByUser($ip_address, $username);
 
 		if ($ips == 0) {
-			$insert = [
+			$dataInsert = [
 				'user' => $username,
-				'ip_address' => $ip_address,
-				'timestamp' => time()
+				'ip_address' => $ip_address
 			];
 
-			$this->db->insert('cookies', $insert);
+			$this->auth->insertCookie($dataInsert);
 		} else {
-			$this->db->set('timestamp', time());
-			$this->db->where('user', $username);
-			$this->db->where('ip_address', $ip_address);
-			$this->db->update('cookies');
+			$this->auth->updateCookie($dataInsert);
 		}
 
 		if($user['sebagai'] == 'pegawai') redirect('pegawai');
