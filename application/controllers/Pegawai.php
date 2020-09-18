@@ -14,14 +14,17 @@ class Pegawai extends CI_Controller
 		$this->load->library('encryption');
 		$this->load->library('pagination');
 		$this->load->library('form_validation');
+		$this->load->model('Manage_model', 'manage');
 	}
 
 	public function index()
 	{
-		$data['title'] = "SIP Bang";  
-		$data['subtitle'] = "Dashboard";  
-		$data['maintitle'] = "Dashboard"; 
-		$data['user'] = $this->db->get_where('users', ['user' => $this->session->userdata('user')])->row_array();
+		$data = [
+			'title' => "SIP Bang",
+			'subtitle' => "Dashboard",
+			'maintitle' => "Dashboard",
+			'user' => $this->manage->getUserBySession()
+		];
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
@@ -33,26 +36,23 @@ class Pegawai extends CI_Controller
 
 	public function rksp()
 	{
-		$data['title'] = "SIP Bang";  
-		$data['subtitle'] = "RKSP";  
-		$data['maintitle'] = "Data RKSP"; 
-		$data['user'] = $this->db->get_where('users', ['user' => $this->session->userdata('user')])->row_array();
+		$config = [
+			'base_url' => base_url('pengangkut/rksp'),
+			'total_rows' => $this->manage->numRKSPsPegawai(),
+			'per_page' => 10
+		];
 
-		$config['base_url'] = base_url('pegawai/rksp');
-		$this->db->where('jenis', 'rksp');
-		$this->db->from('tracking');
-		$config['total_rows'] = $this->db->count_all_results();
-		$config['per_page'] = 10;
-
-		$this->config->load('pagination');
-		$this->pagination->initialize($config);
-		$data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
-		$data['pagination'] = $this->pagination->create_links();
-
-		$data['rksp'] = $this->db->order_by('id_tracking', 'DESC')->get_where('tracking', [
-			'jenis' => 'rksp'
-		], $config['per_page'], $data['page'])->result_array();
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data = [
+			'title' => "SIP Bang",
+			'subtitle' => "RKSP",
+			'maintitle' => "Data RKSP",
+			'page' => $page,
+			'pagination' => $this->pagination->create_links(),
+			'user' => $this->manage->getUserBySession(),
+			'ref' => $this->manage->getRKSPs1Pegawai(),
+			'rksp' => $this->manage->getRKSPsPegawai($page, $config['per_page'])
+		];
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);

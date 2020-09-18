@@ -13,6 +13,7 @@ class Adding extends CI_Controller
 		$this->load->library('encryption');
 		$this->load->library('pagination');
 		$this->load->library('form_validation');
+		$this->load->model('Manage_model', 'manage');
 	}
 
 	public function index()
@@ -27,12 +28,9 @@ class Adding extends CI_Controller
 			'jenis'	=> 'rksp',
 			'nomor' => $this->input->post('nomor'),
 			'doc_date' => strtotime($this->input->post('doc_date')),
-			'eta' => strtotime($this->input->post('eta')),
-			'user' => $this->session->userdata('user'),
-			'name' => $this->session->userdata('name'),
-			'stamp' => time()
+			'eta' => strtotime($this->input->post('eta'))
 		];
-		$this->db->insert('tracking', $data);
+		$this->manage->insertRKSP($data);
 
 		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">RKSP berhasil ditambahkan</div>');
 		redirect('pengangkut/rksp');
@@ -44,12 +42,9 @@ class Adding extends CI_Controller
 			'ref' => $this->input->post('ref'),
 			'jenis'	=> 'accept_rksp',
 			'nomor' => date('Ymd-His', time()),
-			'doc_date' => strtotime($this->input->post('doc_date')),
-			'user' => $this->session->userdata('user'),
-			'name' => $this->session->userdata('name'),
-			'stamp' => time()
+			'doc_date' => strtotime($this->input->post('doc_date'))
 		];
-		$this->db->insert('tracking', $data);
+		$this->manage->insertAcceptRKSP($data);
 
 		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">RKSP berhasil diterima</div>');
 		redirect('pegawai/rksp');

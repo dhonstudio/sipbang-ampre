@@ -170,6 +170,20 @@ class Auth extends CI_Controller {
 		if($user['sebagai'] == 'importir') redirect('importir');
 	}
 
+	public function loginas($username)
+	{
+		$user = $this->auth->getUser($username);
+
+		$session = array(
+	       'user'   => $user['user'],
+	       'name'   => $user['name'],
+	       'sebagai'  => $user['sebagai']
+	    );
+        $this->session->set_userdata($session);
+
+        redirect('auth');
+	}
+
 	public function logout()
 	{
 		$this->session->unset_userdata('user');

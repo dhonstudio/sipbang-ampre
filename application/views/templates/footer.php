@@ -49,13 +49,37 @@
       $('.addRKSP').on('click', function(){
         var addAction = '<?= base_url('adding/rksp')?>';
 
+        $('#refLabel').html('');
         $('#modalTrackLabel').html('Data RKSP Baru');
         $('#doc_dateLabel').html('Tanggal RKSP');
         $('#etaLabel').html('Perkiraan Tiba (ETA)');
         $('#contentModalTrack form').attr('action',addAction);
+        $('#nomorDiv input').attr('placeholder','Nomor RKSP');
+        document.getElementById("refDiv").hidden = true;
+        document.getElementById("refRKSP").required = false;
         document.getElementById("nomor").required = true;
         document.getElementById("doc_date").required = true;
         document.getElementById("eta").required = true;
+        document.getElementById("posDiv").hidden = true;
+        document.getElementById("pos").required = false;
+      });
+
+      $('.addManifes').on('click', function(){
+        var addAction = '<?= base_url('adding/manifes')?>';
+
+        $('#refLabel').html('Nomor RKSP');
+        $('#modalTrackLabel').html('Data Manifes Baru');
+        $('#doc_dateLabel').html('Tanggal Manifes');
+        $('#etaLabel').html('Tanggal Kedatangan');
+        $('#contentModalTrack form').attr('action',addAction);
+        $('#nomorDiv input').attr('placeholder','Nomor Manifes');
+        document.getElementById("refDiv").hidden = false;
+        document.getElementById("refRKSP").required = true;
+        document.getElementById("nomor").required = true;
+        document.getElementById("doc_date").required = true;
+        document.getElementById("eta").required = true;
+        document.getElementById("posDiv").hidden = false;
+        document.getElementById("pos").required = true;
       });
 
       $('.acceptRKSP').on('click', function(){
@@ -63,9 +87,11 @@
 
         $('#doc_dateLabel').html('Tanggal Terima');
         $('#contentModalTrack form').attr('action',addAction);
+        document.getElementById("refDiv").hidden = true;
         document.getElementById("nomor").hidden = true;
         document.getElementById("doc_date").required = true;
         document.getElementById("eta").hidden = true;
+        document.getElementById("posDiv").hidden = true;
 
         const id = $(this).data('id');
 
@@ -81,17 +107,7 @@
         });
       });
 
-      $('.addManifes').on('click', function(){
-        var addAction = '<?= base_url('adding/manifes')?>';
-
-        $('#modalTrackLabel').html('Data Manifes Baru');
-        $('#doc_dateLabel').html('Tanggal Manifes');
-        $('#etaLabel').html('Tanggal Kedatangan');
-        $('#contentModalTrack form').attr('action',addAction);
-        document.getElementById("nomor").required = true;
-        document.getElementById("doc_date").required = true;
-        document.getElementById("eta").required = true;
-      });
+      
     </script>
 
     <script src="<?= base_url('assets');?>/js/script.js"></script>
