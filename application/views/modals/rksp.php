@@ -30,7 +30,7 @@
             <small id="doc_dateLabel"></small>
             <input type="date" class="form-control" id="doc_date" name="doc_date" maxlength="11" value="<?= date('Y-m-d', time())?>">
           </div>
-          <div class="form-group">
+          <div class="form-group" id="etaDiv">
             <small id="etaLabel"></small>
             <input type="date" class="form-control" id="eta" name="eta" maxlength="11" value="<?= date('Y-m-d', time())?>">
           </div>

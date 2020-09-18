@@ -15,11 +15,14 @@ class Pegawai extends CI_Controller
 		$this->load->library('pagination');
 		$this->load->library('form_validation');
 		$this->load->model('Manage_model', 'manage');
+
+		$this->status = "development";
 	}
 
 	public function index()
 	{
 		$data = [
+			'status' => $this->status,
 			'title' => "SIP Bang",
 			'subtitle' => "Dashboard",
 			'maintitle' => "Dashboard",
@@ -44,6 +47,7 @@ class Pegawai extends CI_Controller
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$data = [
+			'status' => $this->status,
 			'title' => "SIP Bang",
 			'subtitle' => "RKSP",
 			'maintitle' => "Data RKSP",

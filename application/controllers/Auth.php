@@ -8,6 +8,10 @@ class Auth extends CI_Controller {
 		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->model('Auth_model', 'auth');
+
+		if (!empty($_SERVER["HTTP_CLIENT_IP"])) $this->ip_address = $_SERVER["HTTP_CLIENT_IP"];
+		else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) $this->ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
+		else $this->ip_address = $_SERVER["REMOTE_ADDR"]; 
 	}
 
 	public function index($type = 'username', $username = '')
@@ -49,10 +53,7 @@ class Auth extends CI_Controller {
 		}
 		
 		if($this->form_validation->run() == false){
-			if (!empty($_SERVER["HTTP_CLIENT_IP"])) $ip_address = $_SERVER["HTTP_CLIENT_IP"];
-			else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) $ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
-			else $ip_address = $_SERVER["REMOTE_ADDR"];
-
+			$ip_address = $this->ip_address;
 			$data = [
 				'ncookies' => $this->auth->numCookies($ip_address),
 				'cookies' => $this->auth->getCookies($ip_address),
@@ -95,34 +96,7 @@ class Auth extends CI_Controller {
 		$user = $this->auth->getUser($username);
 
 		if(password_verify($pass, $user['pass'])){
-		    $session = array(
-		       'user'   => $user['user'],
-		       'name'   => $user['name'],
-		       'sebagai'  => $user['sebagai']
-		    );
-	        $this->session->set_userdata($session);
-
-	        if (!empty($_SERVER["HTTP_CLIENT_IP"])) $ip_address = $_SERVER["HTTP_CLIENT_IP"];
-			else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) $ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
-			else $ip_address = $_SERVER["REMOTE_ADDR"];
-
-			$ips = $this->auth->numCookiesByUser($ip_address, $username);
-
-			if ($ips == 0) {
-				$dataInsert = [
-					'user' => $username,
-					'ip_address' => $ip_address
-				];
-
-				$this->auth->insertCookie($dataInsert);
-			} else {
-				$this->auth->updateCookie($dataInsert);
-			}
-
-			if($user['sebagai'] == 'pegawai') redirect('pegawai');
-			if($user['sebagai'] == 'pengangkut') redirect('pengangkut');
-			if($user['sebagai'] == 'tps') redirect('tps');
-			if($user['sebagai'] == 'importir') redirect('importir');
+	        $this->_logon($username, $user);
 		} else {
 			$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">Password salah</div>');
 			redirect('auth/index/password/'.$username);
@@ -140,6 +114,11 @@ class Auth extends CI_Controller {
 
 		$this->auth->updateUser($dataInsert);
 
+        $this->_logon($username, $user);
+	}
+
+	private function _logon($username, $user)
+	{
 		$session = array(
 	       'user'   => $user['user'],
 	       'name'   => $user['name'],
@@ -147,9 +126,7 @@ class Auth extends CI_Controller {
 	    );
         $this->session->set_userdata($session);
 
-        if (!empty($_SERVER["HTTP_CLIENT_IP"])) $ip_address = $_SERVER["HTTP_CLIENT_IP"];
-		else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) $ip_address = $_SERVER["HTTP_X_FORWARDED_FOR"];
-		else $ip_address = $_SERVER["REMOTE_ADDR"];
+		$ip_address = $this->ip_address;
 
 		$ips = $this->auth->numCookiesByUser($ip_address, $username);
 
@@ -164,24 +141,7 @@ class Auth extends CI_Controller {
 			$this->auth->updateCookie($dataInsert);
 		}
 
-		if($user['sebagai'] == 'pegawai') redirect('pegawai');
-		if($user['sebagai'] == 'pengangkut') redirect('pengangkut');
-		if($user['sebagai'] == 'tps') redirect('tps');
-		if($user['sebagai'] == 'importir') redirect('importir');
-	}
-
-	public function loginas($username)
-	{
-		$user = $this->auth->getUser($username);
-
-		$session = array(
-	       'user'   => $user['user'],
-	       'name'   => $user['name'],
-	       'sebagai'  => $user['sebagai']
-	    );
-        $this->session->set_userdata($session);
-
-        redirect('auth');
+		redirect('auth');
 	}
 
 	public function logout()
@@ -197,5 +157,19 @@ class Auth extends CI_Controller {
 	public function blocked()
 	{
 		$this->load->view('auth/blocked');
+	}
+
+	public function loginas($username)
+	{
+		$user = $this->auth->getUser($username);
+
+		$session = array(
+	       'user'   => $user['user'],
+	       'name'   => $user['name'],
+	       'sebagai'  => $user['sebagai']
+	    );
+        $this->session->set_userdata($session);
+
+        redirect('auth');
 	}
 }

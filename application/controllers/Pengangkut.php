@@ -15,11 +15,14 @@ class Pengangkut extends CI_Controller
 		$this->load->library('pagination');
 		$this->load->library('form_validation');
 		$this->load->model('Manage_model', 'manage');
+
+		$this->status = "development";
 	}
 
 	public function index()
 	{
 		$data = [
+			'status' => $this->status,
 			'title' => "SIP Bang",
 			'subtitle' => "Dashboard",
 			'maintitle' => "Dashboard",
@@ -31,7 +34,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/index', $data);
-		$this->load->view('modals/track');
+		$this->load->view('modals/rksp');
 		$this->load->view('templates/footer');
 	}
 
@@ -45,6 +48,7 @@ class Pengangkut extends CI_Controller
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$data = [
+			'status' => $this->status,
 			'title' => "SIP Bang",
 			'subtitle' => "RKSP",
 			'maintitle' => "Data RKSP",

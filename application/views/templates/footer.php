@@ -57,8 +57,10 @@
         $('#nomorDiv input').attr('placeholder','Nomor RKSP');
         document.getElementById("refDiv").hidden = true;
         document.getElementById("refRKSP").required = false;
+        document.getElementById("nomor").hidden = false;
         document.getElementById("nomor").required = true;
         document.getElementById("doc_date").required = true;
+        document.getElementById("etaDiv").hidden = false;
         document.getElementById("eta").required = true;
         document.getElementById("posDiv").hidden = true;
         document.getElementById("pos").required = false;
@@ -75,8 +77,10 @@
         $('#nomorDiv input').attr('placeholder','Nomor Manifes');
         document.getElementById("refDiv").hidden = false;
         document.getElementById("refRKSP").required = true;
+        document.getElementById("nomor").hidden = false;
         document.getElementById("nomor").required = true;
         document.getElementById("doc_date").required = true;
+        document.getElementById("etaDiv").hidden = false;
         document.getElementById("eta").required = true;
         document.getElementById("posDiv").hidden = false;
         document.getElementById("pos").required = true;
@@ -88,10 +92,14 @@
         $('#doc_dateLabel').html('Tanggal Terima');
         $('#contentModalTrack form').attr('action',addAction);
         document.getElementById("refDiv").hidden = true;
+        document.getElementById("refRKSP").required = false;
         document.getElementById("nomor").hidden = true;
+        document.getElementById("nomor").required = false;
         document.getElementById("doc_date").required = true;
-        document.getElementById("eta").hidden = true;
+        document.getElementById("etaDiv").hidden = true;
+        document.getElementById("eta").required = false;
         document.getElementById("posDiv").hidden = true;
+        document.getElementById("pos").required = false;
 
         const id = $(this).data('id');
 
