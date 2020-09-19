@@ -13,7 +13,8 @@ class Adding extends CI_Controller
 		$this->load->library('encryption');
 		$this->load->library('pagination');
 		$this->load->library('form_validation');
-		$this->load->model('Manage_model', 'manage');
+		$this->load->model('User_model', 'user');
+		$this->load->model('Admin_model', 'admin');
 	}
 
 	public function index()
@@ -25,14 +26,13 @@ class Adding extends CI_Controller
 	{
 		$data = [
 			'ref' => 'rksp'.$this->session->userdata('user').'_'.$this->input->post('nomor'),
-			'jenis'	=> 'rksp',
 			'nomor' => $this->input->post('nomor'),
 			'doc_date' => strtotime($this->input->post('doc_date')),
 			'eta' => strtotime($this->input->post('eta'))
 		];
-		$this->manage->insertRKSP($data);
+		$alert = $this->user->insertRKSP($data);
 
-		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">RKSP berhasil ditambahkan</div>');
+		$this->session->set_flashdata('message',$alert);
 		redirect('pengangkut/rksp');
 	}
 

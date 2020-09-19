@@ -14,7 +14,7 @@ class Pengangkut extends CI_Controller
 		$this->load->library('encryption');
 		$this->load->library('pagination');
 		$this->load->library('form_validation');
-		$this->load->model('Manage_model', 'manage');
+		$this->load->model('User_model', 'user');
 
 		$this->status = "development";
 	}
@@ -26,8 +26,8 @@ class Pengangkut extends CI_Controller
 			'title' => "SIP Bang",
 			'subtitle' => "Dashboard",
 			'maintitle' => "Dashboard",
-			'user' => $this->manage->getUserBySession(),
-			'ref' => $this->manage->getRKSPs1()
+			'user' => $this->user->getUser(),
+			'ref' => $this->user->getRKSPs1()
 		];
 
 		$this->load->view('templates/header', $data);
@@ -42,7 +42,7 @@ class Pengangkut extends CI_Controller
 	{
 		$config = [
 			'base_url' => base_url('pengangkut/rksp'),
-			'total_rows' => $this->manage->numRKSPs(),
+			'total_rows' => $this->user->numRKSPs(),
 			'per_page' => 10
 		];
 
@@ -54,9 +54,9 @@ class Pengangkut extends CI_Controller
 			'maintitle' => "Data RKSP",
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
-			'user' => $this->manage->getUserBySession(),
-			'ref' => $this->manage->getRKSPs1(),
-			'rksp' => $this->manage->getRKSPs($page, $config['per_page'])
+			'user' => $this->user->getUser(),
+			'ref' => $this->user->getRKSPs1(),
+			'rksp' => $this->user->getRKSPs($page, $config['per_page'])
 		];
 
 		$this->config->load('pagination');
@@ -66,7 +66,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/rksp', $data);
-		$this->load->view('modals/track');
+		$this->load->view('modals/rksp');
 		$this->load->view('templates/footer');
 	}
 }

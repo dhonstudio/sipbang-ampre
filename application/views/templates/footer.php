@@ -46,26 +46,6 @@
     <script src="<?= base_url('assets');?>/vendor/sb-admin-2/js/sb-admin-2.min.js"></script>
 
     <script>
-      $('.addRKSP').on('click', function(){
-        var addAction = '<?= base_url('adding/rksp')?>';
-
-        $('#refLabel').html('');
-        $('#modalTrackLabel').html('Data RKSP Baru');
-        $('#doc_dateLabel').html('Tanggal RKSP');
-        $('#etaLabel').html('Perkiraan Tiba (ETA)');
-        $('#contentModalTrack form').attr('action',addAction);
-        $('#nomorDiv input').attr('placeholder','Nomor RKSP');
-        document.getElementById("refDiv").hidden = true;
-        document.getElementById("refRKSP").required = false;
-        document.getElementById("nomor").hidden = false;
-        document.getElementById("nomor").required = true;
-        document.getElementById("doc_date").required = true;
-        document.getElementById("etaDiv").hidden = false;
-        document.getElementById("eta").required = true;
-        document.getElementById("posDiv").hidden = true;
-        document.getElementById("pos").required = false;
-      });
-
       $('.addManifes').on('click', function(){
         var addAction = '<?= base_url('adding/manifes')?>';
 

@@ -51,7 +51,7 @@
               ?>
 
               <?php foreach ($addMenu as $am) :?>
-              <a class="dropdown-item my-2 py-1 <?= $am['url'];?>" data-toggle="modal" data-target="#modalTrack" href="#"><?= $am['title'];?></a>
+                <a class="dropdown-item my-2 py-1" data-toggle="modal" data-target="#<?= $am['url']?>" href="#"><?= $am['title'];?></a>
               <?php endforeach;?>
             </div>
 
@@ -68,15 +68,15 @@
         ?>
 
         <?php foreach ($subMenu as $sm) :?>
-        <?php if ($subtitle == $sm['title']) :?>
-        <li class="nav-item active">
+          <?php if ($subtitle == $sm['title']) :?>
+          <li class="nav-item active">
           <?php else :?>
           <li class="nav-item">
           <?php endif;?>
-          <a class="nav-link font-weight-bold" href="<?= base_url($sm['url']);?>">
-            <i class="<?= $sm['icon'];?>"></i>
-            <span><?= $sm['title'];?></span></a>
-        </li>
+            <a class="nav-link font-weight-bold" href="<?= base_url($sm['url']);?>">
+              <i class="<?= $sm['icon'];?>"></i>
+              <span><?= $sm['title'];?></span></a>
+          </li>
         <?php endforeach;?>
 
       <!-- Divider -->
