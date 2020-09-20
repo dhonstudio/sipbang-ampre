@@ -55,7 +55,7 @@
                     <td></td>
                     <td>
                       <?php if ($this->user->numAccept($p['ref'], 'accept_rksp') == 0) :?>
-                      <a href="#" class="badge badge-success acceptRKSP" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAcceptRKSP">Accept</a>
+                      <a href="#" class="badge badge-success acceptRKSP" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
                       <?php endif;?>
                     </td>
                   </tr>
@@ -78,7 +78,7 @@
                     <td><?= date('d/m/Y', $p['eta']);?></td>
                     <td>
                       <?php if ($this->user->numAccept($p['ref'], 'accept_rksp') == 0) :?>
-                      <a href="#" class="badge badge-success acceptRKSP" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAcceptRKSP">Accept</a>
+                      <a href="#" class="badge badge-success acceptRKSP" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
                       <?php endif;?>
                     </td>
                   </tr>

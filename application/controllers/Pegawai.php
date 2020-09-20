@@ -33,8 +33,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/index', $data);
-		$this->load->view('modals/accept_rksp');
-		$this->load->view('modals/accept_manifes');
+		$this->load->view('modals/accept');
 		$this->load->view('templates/footer');
 	}
 
@@ -55,7 +54,6 @@ class Pegawai extends CI_Controller
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
-			'ref' => $this->user->getRKSPs1Pegawai(),
 			'rksp' => $this->user->getTrackingsPegawai('rksp', $page, $config['per_page'])
 		];
 
@@ -63,8 +61,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/rksp_pegawai', $data);
-		$this->load->view('modals/accept_rksp');
-		$this->load->view('modals/accept_manifes');
+		$this->load->view('modals/accept');
 		$this->load->view('templates/footer');
 	}
 
@@ -85,7 +82,6 @@ class Pegawai extends CI_Controller
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
-			'ref' => $this->user->getRKSPs1Pegawai(),
 			'manifes' => $this->user->getTrackingsPegawai('manifes', $page, $config['per_page'])
 		];
 
@@ -93,8 +89,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/manifes_pegawai', $data);
-		$this->load->view('modals/accept_rksp');
-		$this->load->view('modals/accept_manifes');
+		$this->load->view('modals/accept');
 		$this->load->view('templates/footer');
 	}
 

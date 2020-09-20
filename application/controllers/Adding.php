@@ -36,27 +36,29 @@ class Adding extends CI_Controller
 		redirect('pengangkut/rksp');
 	}
 
-	public function rksp_accept()
+	public function accept($accept)
 	{
 		$data = [
 			'ref' => $this->input->post('ref'),
 			'nomor' => date('Ymd-His', time()),
+			'accept' => 'accept_'.$accept,
+			'jenis' => $accept,
 			'doc_date' => strtotime($this->input->post('doc_date'))
 		];
-		$this->admin->insertAcceptRKSP($data);
+		$this->admin->insertAccept($data);
 
-		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">RKSP berhasil diterima</div>');
-		redirect('pegawai/rksp');
+		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Dokumen berhasil diterima</div>');
+		redirect('pegawai/'.$accept);
 	}
 
 	public function manifes()
 	{
 		$data = [
-			'ref' => 'rksp'.$this->session->userdata('user').'_'.$this->input->post('nomor'),
+			'ref' => $this->input->post('ref'),
 			'nomor' => $this->input->post('nomor'),
 			'doc_date' => strtotime($this->input->post('doc_date')),
 			'eta' => strtotime($this->input->post('eta')),
-			'pos' => strtotime($this->input->post('pos'))
+			'pos' => $this->input->post('pos')
 		];
 		$alert = $this->user->insertManifes($data);
 

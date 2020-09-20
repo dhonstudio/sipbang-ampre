@@ -55,7 +55,7 @@
                     <td></td>
                     <td>
                       <?php if ($this->user->numAccept($p['ref'], 'accept_manifes') == 0) :?>
-                      <a href="#" class="badge badge-success acceptManifes" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAcceptManifes">Accept</a>
+                      <a href="#" class="badge badge-success acceptManifes" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
                       <?php endif;?>
                     </td>
                   </tr>
@@ -78,7 +78,7 @@
                     <td><?= date('d/m/Y', $p['eta']);?></td>
                     <td>
                       <?php if ($this->user->numAccept($p['ref'], 'accept_manifes') == 0) :?>
-                      <a href="#" class="badge badge-success acceptManifes" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAcceptManifes">Accept</a>
+                      <a href="#" class="badge badge-success acceptManifes" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
                       <?php endif;?>
                     </td>
                   </tr>

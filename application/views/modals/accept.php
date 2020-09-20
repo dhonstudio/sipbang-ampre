@@ -1,13 +1,13 @@
-<div class="modal fade" id="modalAcceptManifes" tabindex="-1" role="dialog" aria-labelledby="modalAcceptManifesLabel" aria-hidden="true">
+<div class="modal fade" id="modalAccept" tabindex="-1" role="dialog" aria-labelledby="modalAcceptLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalAcceptManifesLabel"></h5>
+        <h5 class="modal-title" id="modalAcceptLabel"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="<?= base_url('adding/manifes_accept')?>">
+      <form method="post" action="">
         <div class="modal-body">
 
           <div class="form-group">

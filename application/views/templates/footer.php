@@ -55,7 +55,8 @@
           dataType: 'JSON',
           success: function(data) {
               $('#ref').val(data.ref);
-              $('#modalAcceptRKSPLabel').html('Terima Dokumen RKSP nomor '+data.nomor);
+              $('#modalAcceptLabel').html('Terima Dokumen RKSP nomor '+data.nomor);
+              $('.modal-content form').attr('action','<?= base_url('adding/accept/rksp')?>');
           }
         });
       });
@@ -69,7 +70,23 @@
           dataType: 'JSON',
           success: function(data) {
               $('#ref').val(data.ref);
-              $('#modalAcceptManifesLabel').html('Terima Dokumen Manifes nomor '+data.nomor);
+              $('#modalAcceptLabel').html('Terima Dokumen Manifes nomor '+data.nomor);
+              $('.modal-content form').attr('action','<?= base_url('adding/accept/manifes')?>');
+          }
+        });
+      });
+
+      $('.acceptBongkar').on('click', function(){
+        const id = $(this).data('id');
+
+        $.ajax({
+          url: '<?= base_url('pegawai/gettracking/')?>' + id,
+          type: 'get',
+          dataType: 'JSON',
+          success: function(data) {
+              $('#ref').val(data.ref);
+              $('#modalAcceptLabel').html('Terima Dokumen Manifes nomor '+data.nomor);
+              $('.modal-content form').attr('action','<?= base_url('adding/accept/manifes')?>');
           }
         });
       });

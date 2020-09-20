@@ -27,7 +27,8 @@ class Pengangkut extends CI_Controller
 			'subtitle' => "Dashboard",
 			'maintitle' => "Dashboard",
 			'user' => $this->user->getUser(),
-			'ref' => $this->user->getRKSPs1()
+			'ref' => $this->user->getTrackings1('rksp'),
+			'refmanifes' => $this->user->getTrackings1('manifes')
 		];
 
 		$this->load->view('templates/header', $data);
@@ -36,6 +37,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('bodies/index', $data);
 		$this->load->view('modals/rksp');
 		$this->load->view('modals/manifes');
+		$this->load->view('modals/bongkar');
 		$this->load->view('templates/footer');
 	}
 
@@ -56,7 +58,8 @@ class Pengangkut extends CI_Controller
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
-			'ref' => $this->user->getRKSPs1(),
+			'ref' => $this->user->getTrackings1('rksp'),
+			'refmanifes' => $this->user->getTrackings1('manifes'),
 			'rksp' => $this->user->getTrackings('rksp', $page, $config['per_page'])
 		];
 
@@ -69,6 +72,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('bodies/rksp', $data);
 		$this->load->view('modals/rksp');
 		$this->load->view('modals/manifes');
+		$this->load->view('modals/bongkar');
 		$this->load->view('templates/footer');
 	}
 
@@ -89,7 +93,8 @@ class Pengangkut extends CI_Controller
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
-			'ref' => $this->user->getRKSPs1(),
+			'ref' => $this->user->getTrackings1('rksp'),
+			'refmanifes' => $this->user->getTrackings1('manifes'),
 			'manifes' => $this->user->getTrackings('manifes', $page, $config['per_page'])
 		];
 
@@ -102,6 +107,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('bodies/manifes', $data);
 		$this->load->view('modals/rksp');
 		$this->load->view('modals/manifes');
+		$this->load->view('modals/bongkar');
 		$this->load->view('templates/footer');
 	}
 }

@@ -18,7 +18,7 @@ class Admin_model extends CI_Model
 	{
 		$query = "SELECT *
 					FROM `tracking`
-					WHERE `id_tracking` = '$id'
+					WHERE `id_tracking` = $id
 					";
 		return $this->db->query($query)->row_array();
 	}
@@ -30,15 +30,6 @@ class Admin_model extends CI_Model
 					WHERE `jenis` = '$jenis'
 					ORDER BY `id_tracking` DESC
 					LIMIT $offset, $limit
-					";
-		return $this->db->query($query)->result_array();
-	}
-
-	public function getRKSPs1Pegawai()
-	{
-		$query = "SELECT *
-					FROM `tracking`
-					WHERE `jenis` = 'rksp'
 					";
 		return $this->db->query($query)->result_array();
 	}
@@ -62,27 +53,28 @@ class Admin_model extends CI_Model
 		return $this->db->query($query)->num_rows();
 	}
 
-	public function insertAcceptRKSP($data)
+	public function insertAccept($data)
 	{
 		$ref = $data['ref'];
-		$jenis = 'accept_rksp';
+		$accept = $data['accept'];
+		$jenis = $data['jenis'];
 		$nomor = $data['nomor'];
 		$doc_date = $data['doc_date'];
 		$user = $this->session->userdata('user');
 		$name = $this->session->userdata('name');
 		$stamp = time();
 
-		$query = "INSERT INTO `tracking`
+		$query1 = "INSERT INTO `tracking`
 					(`ref`,`jenis`,`nomor`,`doc_date`,`user`,`name`,`stamp`)
-					VALUES ('$ref','$jenis','$nomor',$doc_date,'$user','$name',$stamp)
+					VALUES ('$ref','$accept','$nomor',$doc_date,'$user','$name',$stamp)
 					";
-		$this->db->query($query);
+		$this->db->query($query1);
 
-		$query = "UPDATE `tracking` 
+		$query2 = "UPDATE `tracking` 
 					SET `next`='Y'
 					WHERE `ref`='$ref'
-					AND `jenis`='rksp'
+					AND `jenis`='$jenis'
 					";
-		$this->db->query($query);
+		$this->db->query($query2);
 	}
 }

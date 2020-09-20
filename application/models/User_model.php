@@ -28,14 +28,14 @@ class User_model extends CI_Model
 		return $this->db->query($query)->result_array();
 	}
 
-	public function getRKSPs1()
+	public function getTrackings1($jenis)
 	{
 		$user = $this->session->userdata('user');
 
 		$query = "SELECT *
 					FROM `tracking`
 					WHERE `user` = '$user'
-					AND `jenis` = 'rksp'
+					AND `jenis` = '$jenis'
 					AND `next` = 'Y'
 					";
 		return $this->db->query($query)->result_array();
@@ -105,12 +105,19 @@ class User_model extends CI_Model
 					(`ref`,`jenis`,`nomor`,`doc_date`,`eta`,`pos`,`user`,`name`,`stamp`)
 					VALUES ('$ref','manifes','$nomor',$doc_date,$eta,'$pos','$user','$name',$stamp)
 					";
+
+		$query3 = "UPDATE `tracking` 
+					SET `next`='M'
+					WHERE `ref`='$ref'
+					AND `jenis`='rksp'
+					";
 		
 		if ($result1 == 0) {
 			$this->db->query($query2);
-			return "<div class='alert alert-success' role='alert'>RKSP berhasil ditambahkan</div>";
+			$this->db->query($query3);
+			return "<div class='alert alert-success' role='alert'>Manifes berhasil ditambahkan</div>";
 		} else {
-			return "<div class='alert alert-danger' role='alert'>RKSP gagal ditambahkan, RKSP sudah pernah diinput</div>";
+			return "<div class='alert alert-danger' role='alert'>Manifes gagal ditambahkan, Manifes sudah pernah diinput</div>";
 		}
 	}
 }
