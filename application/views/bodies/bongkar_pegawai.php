@@ -52,8 +52,8 @@
                     <td><?= date('d/m/Y H:i', $p['stamp']);?></td>
                     <td></td>
                     <td>
-                      <?php if ($this->user->numAccept($p['ref'], 'accept_manifes') == 0) :?>
-                      <a href="#" class="badge badge-success acceptManifes" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
+                      <?php if ($this->user->numAccept($p['ref'], 'accept_bongkar') == 0) :?>
+                      <a href="#" class="badge badge-success acceptBongkar" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
                       <?php endif;?>
                     </td>
                   </tr>
@@ -66,7 +66,7 @@
                   <tr>
                     <th scope="col">Nomor Pembongkaran</th>
                     <th scope="col">Waktu Bongkar</th>
-                    <th scope="col">File</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -74,7 +74,11 @@
                   <tr>
                     <td><b><?= $p['nomor'];?></b><br><?= $p['name'];?></td>
                     <td><?= date('d/m/Y', $p['doc_date']);?></td>
-                    <td></td>
+                    <td>
+                      <?php if ($this->user->numAccept($p['ref'], 'accept_bongkar') == 0) :?>
+                      <a href="#" class="badge badge-success acceptBongkar" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
+                      <?php endif;?>
+                    </td>
                   </tr>
                 <?php endforeach;?>
                 </tbody>

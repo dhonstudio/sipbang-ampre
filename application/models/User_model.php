@@ -36,7 +36,17 @@ class User_model extends CI_Model
 					FROM `tracking`
 					WHERE `user` = '$user'
 					AND `jenis` = '$jenis'
-					AND `next` = 'Y'
+					AND `next` = 1
+					";
+		return $this->db->query($query)->result_array();
+	}
+
+	public function getTrackings2($jenis)
+	{
+		$query = "SELECT *
+					FROM `tracking`
+					WHERE `jenis` = '$jenis'
+					AND `next` = 3
 					";
 		return $this->db->query($query)->result_array();
 	}
@@ -117,7 +127,7 @@ class User_model extends CI_Model
 					";
 
 		$query3 = "UPDATE `tracking` 
-					SET `next`='M'
+					SET `next`=2
 					WHERE `ref`='$ref'
 					AND `jenis`='rksp'
 					";
@@ -135,18 +145,19 @@ class User_model extends CI_Model
 	{
 		$ref = $data['ref'];
 		$nomor = date('Ymd-', time()).$data['nomor'].date('-His', time());
+		$no_manifes = $data['nomor'];
 		$doc_date = $data['doc_date'];
 		$user = $this->session->userdata('user');
 		$name = $this->session->userdata('name');
 		$stamp = time();
 
 		$query2 = "INSERT INTO `tracking`
-					(`ref`,`jenis`,`nomor`,`doc_date`,`user`,`name`,`stamp`)
-					VALUES ('$ref','bongkar','$nomor',$doc_date,'$user','$name',$stamp)
+					(`ref`,`jenis`,`nomor`,`no_manifes`,`doc_date`,`user`,`name`,`stamp`)
+					VALUES ('$ref','bongkar','$nomor','$no_manifes',$doc_date,'$user','$name',$stamp)
 					";
 
 		$query3 = "UPDATE `tracking` 
-					SET `next`='M'
+					SET `next`=2
 					WHERE `ref`='$ref'
 					AND `jenis`='manifes'
 					";
@@ -154,5 +165,32 @@ class User_model extends CI_Model
 		$this->db->query($query2);
 		$this->db->query($query3);
 		return "<div class='alert alert-success' role='alert'>Pembongkaran berhasil ditambahkan</div>";
+	}
+
+	public function insertTimbun($data)
+	{
+		$ref = $data['ref'];
+		$nomor = date('Ymd-', time()).$data['nomor'].date('-His', time());
+		$no_manifes = $data['nomor'];
+		$doc_date = $data['doc_date'];
+		$pos = $data['pos'];
+		$user = $this->session->userdata('user');
+		$name = $this->session->userdata('name');
+		$stamp = time();
+
+		$query2 = "INSERT INTO `tracking`
+					(`ref`,`jenis`,`nomor`,`no_manifes`,`pos`,`doc_date`,`user`,`name`,`stamp`)
+					VALUES ('$ref','timbun','$nomor','$no_manifes','$pos',$doc_date,'$user','$name',$stamp)
+					";
+
+		$query3 = "UPDATE `tracking` 
+					SET `next`=4
+					WHERE `ref`='$ref'
+					AND `jenis`='manifes'
+					";
+		
+		$this->db->query($query2);
+		$this->db->query($query3);
+		return "<div class='alert alert-success' role='alert'>Penimbunan berhasil ditambahkan</div>";
 	}
 }

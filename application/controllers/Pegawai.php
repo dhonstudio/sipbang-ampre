@@ -105,8 +105,8 @@ class Pegawai extends CI_Controller
 		$data = [
 			'status' => $this->status,
 			'title' => "SIP Bang",
-			'subtitle' => "Manifes",
-			'maintitle' => "Data Manifes",
+			'subtitle' => "Pembongkaran",
+			'maintitle' => "Data Pembongkaran",
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
@@ -117,6 +117,34 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/bongkar_pegawai', $data);
+		$this->load->view('modals/accept');
+		$this->load->view('templates/footer');
+	}
+
+	public function timbun()
+	{
+		$config = [
+			'base_url' => base_url('pegawai/timbun'),
+			'total_rows' => $this->user->numTrackingsPegawai('timbun'),
+			'per_page' => 10
+		];
+
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data = [
+			'status' => $this->status,
+			'title' => "SIP Bang",
+			'subtitle' => "Penimbunan",
+			'maintitle' => "Data Penimbunan",
+			'page' => $page,
+			'pagination' => $this->pagination->create_links(),
+			'user' => $this->user->getUser(),
+			'timbun' => $this->user->getTrackingsPegawai('timbun', $page, $config['per_page'])
+		];
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('bodies/timbun_pegawai', $data);
 		$this->load->view('modals/accept');
 		$this->load->view('templates/footer');
 	}

@@ -68,7 +68,7 @@
                   <tr>
                     <th scope="col">Nomor RKSP</th>
                     <th scope="col">ETA</th>
-                    <th scope="col">File</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>

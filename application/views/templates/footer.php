@@ -85,8 +85,23 @@
           dataType: 'JSON',
           success: function(data) {
               $('#ref').val(data.ref);
-              $('#modalAcceptLabel').html('Terima Dokumen Manifes nomor '+data.nomor);
-              $('.modal-content form').attr('action','<?= base_url('adding/accept/manifes')?>');
+              $('#modalAcceptLabel').html('Terima Dokumen Pembongkaran nomor '+data.nomor);
+              $('.modal-content form').attr('action','<?= base_url('adding/acceptBongkar/bongkar')?>');
+          }
+        });
+      });
+
+      $('.acceptTimbun').on('click', function(){
+        const id = $(this).data('id');
+
+        $.ajax({
+          url: '<?= base_url('pegawai/gettracking/')?>' + id,
+          type: 'get',
+          dataType: 'JSON',
+          success: function(data) {
+              $('#ref').val(data.ref);
+              $('#modalAcceptLabel').html('Terima Dokumen Penimbunan nomor '+data.nomor);
+              $('.modal-content form').attr('action','<?= base_url('adding/acceptBongkar/timbun')?>');
           }
         });
       });

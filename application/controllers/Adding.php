@@ -50,6 +50,20 @@ class Adding extends CI_Controller
 		redirect('pegawai/'.$accept);
 	}
 
+	public function acceptBongkar($accept)
+	{
+		$data = [
+			'ref' => $this->input->post('ref'),
+			'accept' => 'accept_'.$accept,
+			'jenis' => 'manifes',
+			'doc_date' => strtotime($this->input->post('doc_date'))
+		];
+		$this->admin->insertAcceptBongkar($data);
+
+		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Dokumen berhasil diterima</div>');
+		redirect('pegawai/'.$accept);
+	}
+
 	public function manifes()
 	{
 		$data = [
@@ -76,5 +90,19 @@ class Adding extends CI_Controller
 
 		$this->session->set_flashdata('message',$alert);
 		redirect('pengangkut/bongkar');
+	}
+
+	public function timbun()
+	{
+		$data = [
+			'ref' => $this->input->post('ref'),
+			'nomor' => $this->user->getManifes($this->input->post('ref'))['nomor'],
+			'doc_date' => strtotime($this->input->post('doc_date')),
+			'pos' => $this->input->post('pos')
+		];
+		$alert = $this->user->insertTimbun($data);
+
+		$this->session->set_flashdata('message',$alert);
+		redirect('tps/timbun');
 	}
 }

@@ -28,7 +28,7 @@ class Admin_model extends CI_Model
 		$query = "SELECT *
 					FROM `tracking`
 					WHERE `jenis` = '$jenis'
-					ORDER BY `id_tracking` DESC
+					ORDER BY `next` ASC, `id_tracking` DESC
 					LIMIT $offset, $limit
 					";
 		return $this->db->query($query)->result_array();
@@ -71,7 +71,34 @@ class Admin_model extends CI_Model
 		$this->db->query($query1);
 
 		$query2 = "UPDATE `tracking` 
-					SET `next`='Y'
+					SET `next`=1
+					WHERE `ref`='$ref'
+					AND `jenis`='$jenis'
+					";
+		$this->db->query($query2);
+	}
+
+	public function insertAcceptBongkar($data)
+	{
+		$ref = $data['ref'];
+		$accept = $data['accept'];
+		$jenis = $data['jenis'];
+		$nomor = date('Ymd-His', time());
+		$doc_date = $data['doc_date'];
+		$user = $this->session->userdata('user');
+		$name = $this->session->userdata('name');
+		$stamp = time();
+		if ($accept == 'accept_bongkar') $next = 3;
+		if ($accept == 'accept_timbun') $next = 5;
+
+		$query1 = "INSERT INTO `tracking`
+					(`ref`,`jenis`,`nomor`,`doc_date`,`user`,`name`,`stamp`)
+					VALUES ('$ref','$accept','$nomor',$doc_date,'$user','$name',$stamp)
+					";
+		$this->db->query($query1);
+
+		$query2 = "UPDATE `tracking` 
+					SET `next`=$next
 					WHERE `ref`='$ref'
 					AND `jenis`='$jenis'
 					";
