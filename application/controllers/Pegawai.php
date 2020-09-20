@@ -14,7 +14,7 @@ class Pegawai extends CI_Controller
 		$this->load->library('encryption');
 		$this->load->library('pagination');
 		$this->load->library('form_validation');
-		$this->load->model('Manage_model', 'manage');
+		$this->load->model('Admin_model', 'user');
 
 		$this->status = "development";
 	}
@@ -26,22 +26,23 @@ class Pegawai extends CI_Controller
 			'title' => "SIP Bang",
 			'subtitle' => "Dashboard",
 			'maintitle' => "Dashboard",
-			'user' => $this->manage->getUserBySession()
+			'user' => $this->user->getUser()
 		];
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/index', $data);
-		$this->load->view('modals/track');
+		$this->load->view('modals/accept_rksp');
+		$this->load->view('modals/accept_manifes');
 		$this->load->view('templates/footer');
 	}
 
 	public function rksp()
 	{
 		$config = [
-			'base_url' => base_url('pengangkut/rksp'),
-			'total_rows' => $this->manage->numRKSPsPegawai(),
+			'base_url' => base_url('pegawai/rksp'),
+			'total_rows' => $this->user->numTrackingsPegawai('rksp'),
 			'per_page' => 10
 		];
 
@@ -53,21 +54,52 @@ class Pegawai extends CI_Controller
 			'maintitle' => "Data RKSP",
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
-			'user' => $this->manage->getUserBySession(),
-			'ref' => $this->manage->getRKSPs1Pegawai(),
-			'rksp' => $this->manage->getRKSPsPegawai($page, $config['per_page'])
+			'user' => $this->user->getUser(),
+			'ref' => $this->user->getRKSPs1Pegawai(),
+			'rksp' => $this->user->getTrackingsPegawai('rksp', $page, $config['per_page'])
 		];
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/rksp_pegawai', $data);
-		$this->load->view('modals/track');
+		$this->load->view('modals/accept_rksp');
+		$this->load->view('modals/accept_manifes');
 		$this->load->view('templates/footer');
 	}
 
-	public function getrksp($id)
+	public function manifes()
 	{
-		echo json_encode($this->db->get_where('tracking', ['id_tracking' => $id])->row_array());
+		$config = [
+			'base_url' => base_url('pegawai/manifes'),
+			'total_rows' => $this->user->numTrackingsPegawai('manifes'),
+			'per_page' => 10
+		];
+
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data = [
+			'status' => $this->status,
+			'title' => "SIP Bang",
+			'subtitle' => "Manifes",
+			'maintitle' => "Data Manifes",
+			'page' => $page,
+			'pagination' => $this->pagination->create_links(),
+			'user' => $this->user->getUser(),
+			'ref' => $this->user->getRKSPs1Pegawai(),
+			'manifes' => $this->user->getTrackingsPegawai('manifes', $page, $config['per_page'])
+		];
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('bodies/manifes_pegawai', $data);
+		$this->load->view('modals/accept_rksp');
+		$this->load->view('modals/accept_manifes');
+		$this->load->view('templates/footer');
+	}
+
+	public function gettracking($id)
+	{
+		echo json_encode($this->user->getTracking($id));
 	}
 }

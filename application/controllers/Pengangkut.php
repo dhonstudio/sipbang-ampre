@@ -35,6 +35,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/index', $data);
 		$this->load->view('modals/rksp');
+		$this->load->view('modals/manifes');
 		$this->load->view('templates/footer');
 	}
 
@@ -42,7 +43,7 @@ class Pengangkut extends CI_Controller
 	{
 		$config = [
 			'base_url' => base_url('pengangkut/rksp'),
-			'total_rows' => $this->user->numRKSPs(),
+			'total_rows' => $this->user->numTrackings('rksp'),
 			'per_page' => 10
 		];
 
@@ -56,7 +57,7 @@ class Pengangkut extends CI_Controller
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
 			'ref' => $this->user->getRKSPs1(),
-			'rksp' => $this->user->getRKSPs($page, $config['per_page'])
+			'rksp' => $this->user->getTrackings('rksp', $page, $config['per_page'])
 		];
 
 		$this->config->load('pagination');
@@ -67,6 +68,40 @@ class Pengangkut extends CI_Controller
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/rksp', $data);
 		$this->load->view('modals/rksp');
+		$this->load->view('modals/manifes');
+		$this->load->view('templates/footer');
+	}
+
+	public function manifes()
+	{
+		$config = [
+			'base_url' => base_url('pengangkut/manifes'),
+			'total_rows' => $this->user->numTrackings('manifes'),
+			'per_page' => 10
+		];
+
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data = [
+			'status' => $this->status,
+			'title' => "SIP Bang",
+			'subtitle' => "Manifes",
+			'maintitle' => "Data Manifes",
+			'page' => $page,
+			'pagination' => $this->pagination->create_links(),
+			'user' => $this->user->getUser(),
+			'ref' => $this->user->getRKSPs1(),
+			'manifes' => $this->user->getTrackings('manifes', $page, $config['per_page'])
+		];
+
+		$this->config->load('pagination');
+		$this->pagination->initialize($config);
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('bodies/manifes', $data);
+		$this->load->view('modals/rksp');
+		$this->load->view('modals/manifes');
 		$this->load->view('templates/footer');
 	}
 }

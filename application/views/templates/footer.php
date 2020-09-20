@@ -46,56 +46,33 @@
     <script src="<?= base_url('assets');?>/vendor/sb-admin-2/js/sb-admin-2.min.js"></script>
 
     <script>
-      $('.addManifes').on('click', function(){
-        var addAction = '<?= base_url('adding/manifes')?>';
-
-        $('#refLabel').html('Nomor RKSP');
-        $('#modalTrackLabel').html('Data Manifes Baru');
-        $('#doc_dateLabel').html('Tanggal Manifes');
-        $('#etaLabel').html('Tanggal Kedatangan');
-        $('#contentModalTrack form').attr('action',addAction);
-        $('#nomorDiv input').attr('placeholder','Nomor Manifes');
-        document.getElementById("refDiv").hidden = false;
-        document.getElementById("refRKSP").required = true;
-        document.getElementById("nomor").hidden = false;
-        document.getElementById("nomor").required = true;
-        document.getElementById("doc_date").required = true;
-        document.getElementById("etaDiv").hidden = false;
-        document.getElementById("eta").required = true;
-        document.getElementById("posDiv").hidden = false;
-        document.getElementById("pos").required = true;
-      });
-
       $('.acceptRKSP').on('click', function(){
-        var addAction = '<?= base_url('adding/rksp_accept')?>';
-
-        $('#doc_dateLabel').html('Tanggal Terima');
-        $('#contentModalTrack form').attr('action',addAction);
-        document.getElementById("refDiv").hidden = true;
-        document.getElementById("refRKSP").required = false;
-        document.getElementById("nomor").hidden = true;
-        document.getElementById("nomor").required = false;
-        document.getElementById("doc_date").required = true;
-        document.getElementById("etaDiv").hidden = true;
-        document.getElementById("eta").required = false;
-        document.getElementById("posDiv").hidden = true;
-        document.getElementById("pos").required = false;
-
         const id = $(this).data('id');
 
         $.ajax({
-          url: '<?= base_url('pegawai/getrksp/')?>' + id,
+          url: '<?= base_url('pegawai/gettracking/')?>' + id,
           type: 'get',
           dataType: 'JSON',
           success: function(data) {
-              $('#id_doc').val(data.id_tracking);
               $('#ref').val(data.ref);
-              $('#modalTrackLabel').html('Terima Dokumen RKSP nomor '+data.nomor);
+              $('#modalAcceptRKSPLabel').html('Terima Dokumen RKSP nomor '+data.nomor);
           }
         });
       });
 
-      
+      $('.acceptManifes').on('click', function(){
+        const id = $(this).data('id');
+
+        $.ajax({
+          url: '<?= base_url('pegawai/gettracking/')?>' + id,
+          type: 'get',
+          dataType: 'JSON',
+          success: function(data) {
+              $('#ref').val(data.ref);
+              $('#modalAcceptManifesLabel').html('Terima Dokumen Manifes nomor '+data.nomor);
+          }
+        });
+      });
     </script>
 
     <script src="<?= base_url('assets');?>/js/script.js"></script>
