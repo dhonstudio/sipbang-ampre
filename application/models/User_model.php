@@ -41,6 +41,16 @@ class User_model extends CI_Model
 		return $this->db->query($query)->result_array();
 	}
 
+	public function getManifes($ref)
+	{
+		$query = "SELECT *
+					FROM `tracking`
+					WHERE `ref` = '$ref'
+					AND `jenis` = 'manifes'
+					";
+		return $this->db->query($query)->row_array();
+	}
+
 	public function numTrackings($jenis)
 	{
 		$user = $this->session->userdata('user');
@@ -119,5 +129,30 @@ class User_model extends CI_Model
 		} else {
 			return "<div class='alert alert-danger' role='alert'>Manifes gagal ditambahkan, Manifes sudah pernah diinput</div>";
 		}
+	}
+
+	public function insertBongkar($data)
+	{
+		$ref = $data['ref'];
+		$nomor = date('Ymd-', time()).$data['nomor'].date('-His', time());
+		$doc_date = $data['doc_date'];
+		$user = $this->session->userdata('user');
+		$name = $this->session->userdata('name');
+		$stamp = time();
+
+		$query2 = "INSERT INTO `tracking`
+					(`ref`,`jenis`,`nomor`,`doc_date`,`user`,`name`,`stamp`)
+					VALUES ('$ref','bongkar','$nomor',$doc_date,'$user','$name',$stamp)
+					";
+
+		$query3 = "UPDATE `tracking` 
+					SET `next`='M'
+					WHERE `ref`='$ref'
+					AND `jenis`='manifes'
+					";
+		
+		$this->db->query($query2);
+		$this->db->query($query3);
+		return "<div class='alert alert-success' role='alert'>Pembongkaran berhasil ditambahkan</div>";
 	}
 }

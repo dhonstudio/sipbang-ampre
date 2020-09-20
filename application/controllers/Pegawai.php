@@ -93,6 +93,34 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/footer');
 	}
 
+	public function bongkar()
+	{
+		$config = [
+			'base_url' => base_url('pegawai/bongkar'),
+			'total_rows' => $this->user->numTrackingsPegawai('bongkar'),
+			'per_page' => 10
+		];
+
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data = [
+			'status' => $this->status,
+			'title' => "SIP Bang",
+			'subtitle' => "Manifes",
+			'maintitle' => "Data Manifes",
+			'page' => $page,
+			'pagination' => $this->pagination->create_links(),
+			'user' => $this->user->getUser(),
+			'bongkar' => $this->user->getTrackingsPegawai('bongkar', $page, $config['per_page'])
+		];
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('bodies/bongkar_pegawai', $data);
+		$this->load->view('modals/accept');
+		$this->load->view('templates/footer');
+	}
+
 	public function gettracking($id)
 	{
 		echo json_encode($this->user->getTracking($id));

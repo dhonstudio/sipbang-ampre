@@ -110,4 +110,39 @@ class Pengangkut extends CI_Controller
 		$this->load->view('modals/bongkar');
 		$this->load->view('templates/footer');
 	}
+
+	public function bongkar()
+	{
+		$config = [
+			'base_url' => base_url('pengangkut/bongkar'),
+			'total_rows' => $this->user->numTrackings('bongkar'),
+			'per_page' => 10
+		];
+
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data = [
+			'status' => $this->status,
+			'title' => "SIP Bang",
+			'subtitle' => "Pembongkaran",
+			'maintitle' => "Data Pembongkaran",
+			'page' => $page,
+			'pagination' => $this->pagination->create_links(),
+			'user' => $this->user->getUser(),
+			'ref' => $this->user->getTrackings1('rksp'),
+			'refmanifes' => $this->user->getTrackings1('manifes'),
+			'bongkar' => $this->user->getTrackings('bongkar', $page, $config['per_page'])
+		];
+
+		$this->config->load('pagination');
+		$this->pagination->initialize($config);
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('bodies/bongkar', $data);
+		$this->load->view('modals/rksp');
+		$this->load->view('modals/manifes');
+		$this->load->view('modals/bongkar');
+		$this->load->view('templates/footer');
+	}
 }

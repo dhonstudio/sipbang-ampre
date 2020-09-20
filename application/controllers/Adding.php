@@ -40,7 +40,6 @@ class Adding extends CI_Controller
 	{
 		$data = [
 			'ref' => $this->input->post('ref'),
-			'nomor' => date('Ymd-His', time()),
 			'accept' => 'accept_'.$accept,
 			'jenis' => $accept,
 			'doc_date' => strtotime($this->input->post('doc_date'))
@@ -64,5 +63,18 @@ class Adding extends CI_Controller
 
 		$this->session->set_flashdata('message',$alert);
 		redirect('pengangkut/manifes');
+	}
+
+	public function bongkar()
+	{
+		$data = [
+			'ref' => $this->input->post('ref'),
+			'nomor' => $this->user->getManifes($this->input->post('ref'))['nomor'],
+			'doc_date' => strtotime($this->input->post('doc_date'))
+		];
+		$alert = $this->user->insertBongkar($data);
+
+		$this->session->set_flashdata('message',$alert);
+		redirect('pengangkut/bongkar');
 	}
 }

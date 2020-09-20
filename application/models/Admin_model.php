@@ -58,7 +58,7 @@ class Admin_model extends CI_Model
 		$ref = $data['ref'];
 		$accept = $data['accept'];
 		$jenis = $data['jenis'];
-		$nomor = $data['nomor'];
+		$nomor = date('Ymd-His', time());
 		$doc_date = $data['doc_date'];
 		$user = $this->session->userdata('user');
 		$name = $this->session->userdata('name');
