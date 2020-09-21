@@ -15,8 +15,6 @@ class Importir extends CI_Controller
 		$this->load->library('pagination');
 		$this->load->library('form_validation');
 		$this->load->model('User_model', 'user');
-
-		$this->status = "development";
 	}
 
 	public function index()
@@ -27,7 +25,7 @@ class Importir extends CI_Controller
 			'subtitle' => "Dashboard",
 			'maintitle' => "Dashboard",
 			'user' => $this->user->getUser(),
-			'refmanifes' => $this->user->getTrackings2('manifes')
+			'refmanifes' => $this->user->getTrackings3('manifes')
 		];
 
 		$this->load->view('templates/header', $data);
@@ -41,8 +39,8 @@ class Importir extends CI_Controller
 	public function pib()
 	{
 		$config = [
-			'base_url' => base_url('tps/timbun'),
-			'total_rows' => $this->user->numTrackings('bongkar'),
+			'base_url' => base_url('importir/pib'),
+			'total_rows' => $this->user->numTrackings('pib'),
 			'per_page' => 10
 		];
 
@@ -50,13 +48,13 @@ class Importir extends CI_Controller
 		$data = [
 			'status' => $this->status,
 			'title' => "SIP Bang",
-			'subtitle' => "Penimbunan",
-			'maintitle' => "Data Penimbunan",
+			'subtitle' => "PIB",
+			'maintitle' => "Data PIB",
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
-			'refmanifes' => $this->user->getTrackings2('manifes'),
-			'timbun' => $this->user->getTrackings('timbun', $page, $config['per_page'])
+			'refmanifes' => $this->user->getTrackings3('manifes'),
+			'pib' => $this->user->getTrackings('pib', $page, $config['per_page'])
 		];
 
 		$this->config->load('pagination');
@@ -65,8 +63,15 @@ class Importir extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('bodies/timbun', $data);
-		$this->load->view('modals/timbun');
+		$this->load->view('bodies/pib', $data);
+		$this->load->view('modals/pib', $data);
 		$this->load->view('templates/footer');
+	}
+
+	public function gettracking($id)
+	{
+		foreach(explode(",",$this->user->getManifes($id)['pos']) as $pos) {
+			echo '<option value='.$pos.'>'.$pos.'</option>';
+		}
 	}
 }

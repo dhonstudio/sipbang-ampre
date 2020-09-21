@@ -35,7 +35,7 @@
               <table class="table table-hover tabel_el">
                 <thead>
                   <tr>
-                    <th scope="col">Nomor RKSP</th>
+                    <th scope="col">Nomor Manifes</th>
                     <th scope="col">Doc Date</th>
                     <th scope="col">Arrival</th>
                     <th scope="col">Input Date</th>
@@ -58,7 +58,7 @@
               <table class="table table-hover square_el">
                 <thead>
                   <tr>
-                    <th scope="col">Nomor RKSP</th>
+                    <th scope="col">Nomor Manifes</th>
                     <th scope="col">Arrival</th>
                     <th scope="col">File</th>
                   </tr>

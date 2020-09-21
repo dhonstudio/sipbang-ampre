@@ -15,8 +15,6 @@ class TPS extends CI_Controller
 		$this->load->library('pagination');
 		$this->load->library('form_validation');
 		$this->load->model('User_model', 'user');
-
-		$this->status = "development";
 	}
 
 	public function index()

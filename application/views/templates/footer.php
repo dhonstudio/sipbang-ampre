@@ -55,6 +55,8 @@
           dataType: 'JSON',
           success: function(data) {
               $('#ref').val(data.ref);
+              document.getElementById("jenis_respon").hidden = true;
+              document.getElementById("respon").required = false;
               $('#modalAcceptLabel').html('Terima Dokumen RKSP nomor '+data.nomor);
               $('.modal-content form').attr('action','<?= base_url('adding/accept/rksp')?>');
           }
@@ -70,6 +72,8 @@
           dataType: 'JSON',
           success: function(data) {
               $('#ref').val(data.ref);
+              document.getElementById("jenis_respon").hidden = true;
+              document.getElementById("respon").required = false;
               $('#modalAcceptLabel').html('Terima Dokumen Manifes nomor '+data.nomor);
               $('.modal-content form').attr('action','<?= base_url('adding/accept/manifes')?>');
           }
@@ -85,6 +89,8 @@
           dataType: 'JSON',
           success: function(data) {
               $('#ref').val(data.ref);
+              document.getElementById("jenis_respon").hidden = true;
+              document.getElementById("respon").required = false;
               $('#modalAcceptLabel').html('Terima Dokumen Pembongkaran nomor '+data.nomor);
               $('.modal-content form').attr('action','<?= base_url('adding/acceptBongkar/bongkar')?>');
           }
@@ -100,8 +106,41 @@
           dataType: 'JSON',
           success: function(data) {
               $('#ref').val(data.ref);
+              document.getElementById("jenis_respon").hidden = true;
+              document.getElementById("respon").required = false;
               $('#modalAcceptLabel').html('Terima Dokumen Penimbunan nomor '+data.nomor);
               $('.modal-content form').attr('action','<?= base_url('adding/acceptBongkar/timbun')?>');
+          }
+        });
+      });
+
+      $('.acceptPIB').on('click', function(){
+        const id = $(this).data('id');
+
+        $.ajax({
+          url: '<?= base_url('pegawai/gettracking/')?>' + id,
+          type: 'get',
+          dataType: 'JSON',
+          success: function(data) {
+              $('#ref').val(data.ref);
+              document.getElementById("jenis_respon").hidden = false;
+              document.getElementById("respon").required = true;
+              $('#modalAcceptLabel').html('Terima Dokumen PIB nomor '+data.nomor);
+              $('.modal-content form').attr('action','<?= base_url('adding/acceptPIB')?>');
+          }
+        });
+      });
+
+      $('.tampilPosManifes').change(function(){
+        const id = $(this).val();
+        $('#tes').html(id);
+
+        $.ajax({
+          url: '<?= base_url('importir/gettracking/')?>' + id,
+          type: 'get',
+          dataType: 'html',
+          success: function(data) {
+              $('select#pos').html(data);
           }
         });
       });

@@ -10,6 +10,24 @@
       <form method="post" action="">
         <div class="modal-body">
 
+          <div class="form-group" id="jenis_respon">
+            <small>Jenis Respon</small>
+            <div class="input-group-prepend">
+              <select class="custom-select" id="respon" name="respon">
+                <option value="" selected>Pilih</option>
+                <option value="billing" <?php if(set_value('respon') == "billing") echo "selected";?>>Billing</option>
+                <option value="npbl" <?php if(set_value('respon') == "npbl") echo "selected";?>>NPBL</option>
+                <option value="spjk" <?php if(set_value('respon') == "spjk") echo "selected";?>>SPJK</option>
+                <option value="spjm" <?php if(set_value('respon') == "spjm") echo "selected";?>>SPJM</option>
+                <option value="sppb" <?php if(set_value('respon') == "sppb") echo "selected";?>>SPPB</option>
+                <option value="ip" <?php if(set_value('respon') == "ip") echo "selected";?>>IP</option>
+                <option value="pemeriksaan" <?php if(set_value('respon') == "pemeriksaan") echo "selected";?>>Mulai Pemeriksaan</option>
+                <option value="finish" <?php if(set_value('respon') == "finish") echo "selected";?>>Selesai Pemeriksaan</option>
+                <option value="spbl" <?php if(set_value('respon') == "spbl") echo "selected";?>>SPBL</option>
+              </select>
+            </div>
+          </div>
+
           <div class="form-group">
             <input id="ref" name="ref" hidden>
             <small>Tanggal Terima</small>

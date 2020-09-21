@@ -15,8 +15,6 @@ class Pegawai extends CI_Controller
 		$this->load->library('pagination');
 		$this->load->library('form_validation');
 		$this->load->model('Admin_model', 'user');
-
-		$this->status = "development";
 	}
 
 	public function index()
@@ -145,6 +143,34 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/timbun_pegawai', $data);
+		$this->load->view('modals/accept');
+		$this->load->view('templates/footer');
+	}
+
+	public function pib()
+	{
+		$config = [
+			'base_url' => base_url('pegawai/pib'),
+			'total_rows' => $this->user->numTrackingsPegawai('pib'),
+			'per_page' => 10
+		];
+
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data = [
+			'status' => $this->status,
+			'title' => "SIP Bang",
+			'subtitle' => "Penimbunan",
+			'maintitle' => "Data Penimbunan",
+			'page' => $page,
+			'pagination' => $this->pagination->create_links(),
+			'user' => $this->user->getUser(),
+			'pib' => $this->user->getTrackingsPegawai('pib', $page, $config['per_page'])
+		];
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('bodies/pib_pegawai', $data);
 		$this->load->view('modals/accept');
 		$this->load->view('templates/footer');
 	}

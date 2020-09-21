@@ -11,4 +11,6 @@ function is_logged_in()
 
 		if($sebagai != $validation) redirect('auth/blocked');
 	}
+
+	$ci->status = "development";
 }

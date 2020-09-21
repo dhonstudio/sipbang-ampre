@@ -102,6 +102,6 @@ class Admin_model extends CI_Model
 					WHERE `ref`='$ref'
 					AND `jenis`='$jenis'
 					";
-		$this->db->query($query2);
+		if ($jenis != 'accept_pib') $this->db->query($query2);
 	}
 }

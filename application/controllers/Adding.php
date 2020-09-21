@@ -64,6 +64,20 @@ class Adding extends CI_Controller
 		redirect('pegawai/'.$accept);
 	}
 
+	public function acceptPIB()
+	{
+		$data = [
+			'ref' => $this->input->post('ref'),
+			'accept' => $this->input->post('respon'),
+			'jenis' => 'accept_pib',
+			'doc_date' => strtotime($this->input->post('doc_date'))
+		];
+		$this->admin->insertAcceptBongkar($data);
+
+		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">PIB berhasil direspon</div>');
+		redirect('pegawai/pib');
+	}
+
 	public function manifes()
 	{
 		$data = [
@@ -104,5 +118,20 @@ class Adding extends CI_Controller
 
 		$this->session->set_flashdata('message',$alert);
 		redirect('tps/timbun');
+	}
+
+	public function pib()
+	{
+		$data = [
+			'ref' => $this->input->post('ref'),
+			'no_manifes' => $this->user->getManifes($this->input->post('ref'))['nomor'],
+			'pos' => $this->input->post('pos'),
+			'nomor' => $this->input->post('nomor'),
+			'doc_date' => strtotime($this->input->post('doc_date'))
+		];
+		$alert = $this->user->insertPIB($data);
+
+		$this->session->set_flashdata('message',$alert);
+		redirect('importir/pib');
 	}
 }

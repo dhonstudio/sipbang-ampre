@@ -51,6 +51,16 @@ class User_model extends CI_Model
 		return $this->db->query($query)->result_array();
 	}
 
+	public function getTrackings3($jenis)
+	{
+		$query = "SELECT *
+					FROM `tracking`
+					WHERE `jenis` = '$jenis'
+					AND `next` = 5
+					";
+		return $this->db->query($query)->result_array();
+	}
+
 	public function getManifes($ref)
 	{
 		$query = "SELECT *
@@ -192,5 +202,32 @@ class User_model extends CI_Model
 		$this->db->query($query2);
 		$this->db->query($query3);
 		return "<div class='alert alert-success' role='alert'>Penimbunan berhasil ditambahkan</div>";
+	}
+
+	public function insertPIB($data)
+	{
+		$ref = $data['ref'];
+		$nomor = $data['nomor'];
+		$doc_date = $data['doc_date'];
+		$no_manifes = $data['no_manifes'];
+		$pos = $data['pos'];
+		$user = $this->session->userdata('user');
+		$name = $this->session->userdata('name');
+		$stamp = time();
+
+		$query2 = "INSERT INTO `tracking`
+					(`ref`,`jenis`,`nomor`,`no_manifes`,`pos`,`doc_date`,`user`,`name`,`stamp`)
+					VALUES ('$ref','pib','$nomor','$no_manifes','$pos',$doc_date,'$user','$name',$stamp)
+					";
+
+		$query3 = "UPDATE `tracking` 
+					SET `next`=6
+					WHERE `ref`='$ref'
+					AND `jenis`='manifes'
+					";
+		
+		$this->db->query($query2);
+		$this->db->query($query3);
+		return "<div class='alert alert-success' role='alert'>PIB berhasil ditambahkan</div>";
 	}
 }
