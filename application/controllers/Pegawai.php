@@ -52,13 +52,13 @@ class Pegawai extends CI_Controller
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
-			'rksp' => $this->user->getTrackingsPegawai('rksp', $page, $config['per_page'])
+			'documents' => $this->user->getTrackingsPegawai('rksp', $page, $config['per_page'])
 		];
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('bodies/rksp_pegawai', $data);
+		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
 		$this->load->view('templates/footer');
 	}
@@ -80,13 +80,13 @@ class Pegawai extends CI_Controller
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
-			'manifes' => $this->user->getTrackingsPegawai('manifes', $page, $config['per_page'])
+			'documents' => $this->user->getTrackingsPegawai('manifes', $page, $config['per_page'])
 		];
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('bodies/manifes_pegawai', $data);
+		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
 		$this->load->view('templates/footer');
 	}
@@ -108,13 +108,13 @@ class Pegawai extends CI_Controller
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
-			'bongkar' => $this->user->getTrackingsPegawai('bongkar', $page, $config['per_page'])
+			'documents' => $this->user->getTrackingsPegawai('bongkar', $page, $config['per_page'])
 		];
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('bodies/bongkar_pegawai', $data);
+		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
 		$this->load->view('templates/footer');
 	}
@@ -136,13 +136,13 @@ class Pegawai extends CI_Controller
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
-			'timbun' => $this->user->getTrackingsPegawai('timbun', $page, $config['per_page'])
+			'documents' => $this->user->getTrackingsPegawai('timbun', $page, $config['per_page'])
 		];
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('bodies/timbun_pegawai', $data);
+		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
 		$this->load->view('templates/footer');
 	}
@@ -159,18 +159,18 @@ class Pegawai extends CI_Controller
 		$data = [
 			'status' => $this->status,
 			'title' => "SIP Bang",
-			'subtitle' => "Penimbunan",
-			'maintitle' => "Data Penimbunan",
+			'subtitle' => "PIB",
+			'maintitle' => "Data PIB",
 			'page' => $page,
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
-			'pib' => $this->user->getTrackingsPegawai('pib', $page, $config['per_page'])
+			'documents' => $this->user->getTrackingsPegawai('pib', $page, $config['per_page'])
 		];
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('bodies/pib_pegawai', $data);
+		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
 		$this->load->view('templates/footer');
 	}

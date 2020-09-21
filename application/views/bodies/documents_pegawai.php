@@ -53,8 +53,8 @@
                         <th scope="col">Waktu Timbun</th>
                         <?php else:?>
                           <th scope="col">Doc Date</th>
-                        <?php endif;?>
-
+                        <?php endif;?>s
+                    
                     <?php if ($subtitle == 'RKSP'):?>
                       <th scope="col">ETA</th>
                       <?php elseif ($subtitle == 'Manifes'):?>
@@ -63,8 +63,10 @@
                           <th scope="col">Ref Manifes</th>
                         <?php endif;?>
 
+                    <th scope="col">Owner</th>
                     <th scope="col">Input Date</th>
                     <th scope="col">File</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -79,8 +81,42 @@
                         <td><?= $p['no_manifes'];?></td>
                       <?php endif;?>
 
+                    <td><?= $p['name'];?></td>
                     <td><?= date('d/m/Y H:i', $p['stamp']);?></td>
                     <td></td>
+                    <td>
+                      <?php if ($subtitle == 'RKSP'):?>
+
+                        <?php if ($this->user->numAccept($p['ref'], 'accept_rksp') == 0) :?>
+                          <a href="#" class="badge badge-success acceptRKSP" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
+                        <?php endif;?>
+
+                        <?php elseif ($subtitle == 'Manifes'):?>
+
+                          <?php if ($this->user->numAccept($p['ref'], 'accept_manifes') == 0) :?>
+                            <a href="#" class="badge badge-success acceptManifes" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
+                          <?php endif;?>
+
+                          <?php elseif ($subtitle == 'Pembongkaran'):?>
+
+                            <?php if ($this->user->numAccept($p['ref'], 'accept_bongkar') == 0) :?>
+                              <a href="#" class="badge badge-success acceptBongkar" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
+                            <?php endif;?>
+
+                            <?php elseif ($subtitle == 'Penimbunan'):?>
+
+                              <?php if ($this->user->numAccept($p['ref'], 'accept_timbun') == 0) :?>
+                                <a href="#" class="badge badge-success acceptTimbun" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
+                              <?php endif;?>
+
+                              <?php elseif ($subtitle == 'PIB'):?>
+
+                                <?php if ($this->user->numAccept($p['ref'], 'accept_pib') == 0) :?>
+                                  <a href="#" class="badge badge-success acceptPIB" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Respon</a>
+                                <?php endif;?>
+
+                              <?php endif;?>
+                    </td>
                   </tr>
                 <?php endforeach;?>
                 </tbody>
@@ -105,25 +141,57 @@
                               <th scope="col">Nomor PIB</th>
                               <th scope="col">Ref Manifes</th>
                             <?php endif;?>
-                    
-                    <th scope="col">File</th>
+
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php foreach ($documents as $p) : ?>
                   <tr>
                     <?php if ($subtitle == 'RKSP' || $subtitle == 'Manifes'):?>
-                      <td><b><?= $p['nomor'];?></b></td>
-                      <td><?= date('d/m/Y', $p['doc_date']);?></td>
+                      <td><b><?= $p['nomor'];?></b><br><?= $p['name'];?><br><?= date('d/m/Y', $p['doc_date']);?></td>
+                      <td><?= date('d/m/Y', $p['eta']);?></td>
                       <?php elseif ($subtitle == 'PIB'):?>
-                        <td><b><?= $p['nomor'];?></b><br><?= date('d/m/Y', $p['doc_date']);?></td>
+                        <td><b><?= $p['nomor'];?></b><br><?= $p['name'];?><br><?= date('d/m/Y', $p['doc_date']);?></td>
                         <td><?= $p['no_manifes'];?></td>
                         <?php else:?>
-                          <td><b><?= $p['nomor'];?></b><br><?= date('d/m/Y', $p['doc_date']);?></td>
-                          <td><?= date('d/m/Y', $p['eta']);?></td>
+                          <td><b><?= $p['nomor'];?></b><br><?= $p['name'];?></td>
+                          <td><?= date('d/m/Y', $p['doc_date']);?></td>
                         <?php endif;?>
 
-                    <td></td>
+                    <td>
+                      <?php if ($subtitle == 'RKSP'):?>
+
+                        <?php if ($this->user->numAccept($p['ref'], 'accept_rksp') == 0) :?>
+                          <a href="#" class="badge badge-success acceptRKSP" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
+                        <?php endif;?>
+
+                        <?php elseif ($subtitle == 'Manifes'):?>
+
+                          <?php if ($this->user->numAccept($p['ref'], 'accept_manifes') == 0) :?>
+                            <a href="#" class="badge badge-success acceptManifes" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
+                          <?php endif;?>
+
+                          <?php elseif ($subtitle == 'Pembongkaran'):?>
+
+                            <?php if ($this->user->numAccept($p['ref'], 'accept_bongkar') == 0) :?>
+                              <a href="#" class="badge badge-success acceptBongkar" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
+                            <?php endif;?>
+
+                            <?php elseif ($subtitle == 'Penimbunan'):?>
+
+                              <?php if ($this->user->numAccept($p['ref'], 'accept_timbun') == 0) :?>
+                                <a href="#" class="badge badge-success acceptTimbun" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Accept</a>
+                              <?php endif;?>
+
+                              <?php elseif ($subtitle == 'PIB'):?>
+
+                                <?php if ($this->user->numAccept($p['ref'], 'accept_pib') == 0) :?>
+                                  <a href="#" class="badge badge-success acceptPIB" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Respon</a>
+                                <?php endif;?>
+
+                              <?php endif;?>
+                    </td>
                   </tr>
                 <?php endforeach;?>
                 </tbody>
