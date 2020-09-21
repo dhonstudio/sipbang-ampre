@@ -54,7 +54,7 @@ class TPS extends CI_Controller
 			'pagination' => $this->pagination->create_links(),
 			'user' => $this->user->getUser(),
 			'refmanifes' => $this->user->getTrackings2('manifes'),
-			'timbun' => $this->user->getTrackings('timbun', $page, $config['per_page'])
+			'documents' => $this->user->getTrackings('timbun', $page, $config['per_page'])
 		];
 
 		$this->config->load('pagination');
@@ -63,7 +63,7 @@ class TPS extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('bodies/timbun', $data);
+		$this->load->view('bodies/documents', $data);
 		$this->load->view('modals/timbun');
 		$this->load->view('templates/footer');
 	}

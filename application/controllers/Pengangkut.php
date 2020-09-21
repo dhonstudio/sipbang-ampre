@@ -58,7 +58,7 @@ class Pengangkut extends CI_Controller
 			'user' => $this->user->getUser(),
 			'ref' => $this->user->getTrackings1('rksp'),
 			'refmanifes' => $this->user->getTrackings1('manifes'),
-			'rksp' => $this->user->getTrackings('rksp', $page, $config['per_page'])
+			'documents' => $this->user->getTrackings('rksp', $page, $config['per_page'])
 		];
 
 		$this->config->load('pagination');
@@ -67,7 +67,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('bodies/rksp', $data);
+		$this->load->view('bodies/documents', $data);
 		$this->load->view('modals/rksp');
 		$this->load->view('modals/manifes');
 		$this->load->view('modals/bongkar');
@@ -93,7 +93,7 @@ class Pengangkut extends CI_Controller
 			'user' => $this->user->getUser(),
 			'ref' => $this->user->getTrackings1('rksp'),
 			'refmanifes' => $this->user->getTrackings1('manifes'),
-			'manifes' => $this->user->getTrackings('manifes', $page, $config['per_page'])
+			'documents' => $this->user->getTrackings('manifes', $page, $config['per_page'])
 		];
 
 		$this->config->load('pagination');
@@ -102,7 +102,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('bodies/manifes', $data);
+		$this->load->view('bodies/documents', $data);
 		$this->load->view('modals/rksp');
 		$this->load->view('modals/manifes');
 		$this->load->view('modals/bongkar');
@@ -128,7 +128,7 @@ class Pengangkut extends CI_Controller
 			'user' => $this->user->getUser(),
 			'ref' => $this->user->getTrackings1('rksp'),
 			'refmanifes' => $this->user->getTrackings1('manifes'),
-			'bongkar' => $this->user->getTrackings('bongkar', $page, $config['per_page'])
+			'documents' => $this->user->getTrackings('bongkar', $page, $config['per_page'])
 		];
 
 		$this->config->load('pagination');
@@ -137,7 +137,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('bodies/bongkar', $data);
+		$this->load->view('bodies/documents', $data);
 		$this->load->view('modals/rksp');
 		$this->load->view('modals/manifes');
 		$this->load->view('modals/bongkar');
