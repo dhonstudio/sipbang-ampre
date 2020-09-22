@@ -78,6 +78,29 @@
         });
       });
 
+      function GetFormattedDate(num) {
+        var todayTime = new Date(num);
+        var month = ("0" + (todayTime.getMonth() + 1)).slice(-2);
+        var day = ("0" + todayTime.getDate()).slice(-2);
+        var year = todayTime.getFullYear();
+        return year + "-" + month + "-" + day;
+      }
+
+      $('.modalManifes').on('click', function(){
+        $('#nomorManifes').val('');
+        var date = new Date();
+        docdate = Date.parse(date) 
+        $('#doc_dateManifes').val(GetFormattedDate(docdate));
+        $('#etaManifes').val(GetFormattedDate(docdate));
+        $('#action').val('add');
+        $('#ref_ubah').val('');
+        document.getElementById("ref_ubah").disabled = true;
+        document.getElementById("refManifes").disabled = false;
+        document.getElementById("divRef").hidden = false;
+        $('#posManifes').val('');
+        $('#modalManifesLabel').html('Data Manifes Baru');
+      });
+
       $('.ubahDoc').on('click', function(){
         const id = $(this).data('id');
 
@@ -86,9 +109,17 @@
           type: 'get',
           dataType: 'JSON',
           success: function(data) {
-              $('.modal-content form').attr('action', '<?= base_url('adding/rksp_ubah')?>');
-              $('#nomor').val(data.nomor);
-              $('#nomor').val(data.nomor);
+              $('#nomorManifes').val(data.nomor);
+              let docdate = data.doc_date*1000;
+              $('#doc_dateManifes').val(GetFormattedDate(docdate));
+              $('#etaManifes').val(GetFormattedDate(docdate));
+              $('#action').val('edit');
+              $('#ref_ubah').val(data.ref);
+              document.getElementById("ref_ubah").disabled = false;
+              document.getElementById("refManifes").disabled = true;
+              document.getElementById("divRef").hidden = true;
+              $('#posManifes').val(data.pos);
+              $('#modalManifesLabel').html('Ubah Data Manifes');
           }
         });
       });

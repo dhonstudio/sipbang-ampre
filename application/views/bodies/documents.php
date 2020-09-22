@@ -85,7 +85,11 @@
                         <a href="#" class="badge badge-primary uploadDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalUpload">Upload</a><br>
                       <?php endif;?>
                       
-                      <a href="#" class="badge badge-warning ubahDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modal<?= $modal?>">Ubah</a>
+                      <?php if ($p['jenis'] == 'manifes'):?>
+                        <?php if ($p['next'] == 0):?>
+                          <a href="#" class="badge badge-warning ubahDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modal<?= $modal?>">Ubah</a>
+                        <?php endif;?>
+                      <?php endif;?>
                     </td>
                   </tr>
                 <?php endforeach;?>
@@ -134,7 +138,11 @@
                         <a href="#" class="badge badge-primary uploadDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalUpload">Upload</a>
                       <?php endif;?>
 
-                      <a href="#" class="badge badge-warning ubahDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modal<?= $modal?>">Ubah</a>
+                      <?php if ($p['jenis'] == 'manifes'):?>
+                        <?php if ($p['next'] == 0):?>
+                          <a href="#" class="badge badge-warning ubahDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modal<?= $modal?>">Ubah</a>
+                        <?php endif;?>
+                      <?php endif;?>
                     </td>
                   </tr>
                 <?php endforeach;?>

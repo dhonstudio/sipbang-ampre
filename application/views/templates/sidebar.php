@@ -51,7 +51,7 @@
               ?>
 
               <?php foreach ($addMenu as $am) :?>
-                <a class="dropdown-item my-2 py-1" data-toggle="modal" data-target="#<?= $am['url']?>" href="#"><?= $am['title'];?></a>
+                <a class="dropdown-item my-2 py-1 <?= $am['url']?>" data-toggle="modal" data-target="#<?= $am['url']?>" href="#"><?= $am['title'];?></a>
               <?php endforeach;?>
             </div>
 

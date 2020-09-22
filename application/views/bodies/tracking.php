@@ -15,7 +15,7 @@
                     <?php
                       if ($p['jenis'] == "rksp") $stat = "telah menginput RKSP";
                       if ($p['jenis'] == "accept_rksp") $stat = "telah menerima RKSP";
-                      if ($p['jenis'] == "manifes") $stat = "telah menginput Manifes";
+                      if ($p['jenis'] == "manifes") $stat = "telah menginput Manifes No ".$p['nomor']." dengan Pos: ".$p['pos'];
                       if ($p['jenis'] == "accept_manifes") $stat = "telah menerima Manifes";
                       if ($p['jenis'] == "bongkar") $stat = "telah selesai melakukan pembongkaran";
                       if ($p['jenis'] == "accept_bongkar") $stat = "telah mengawasi pembongkaran";

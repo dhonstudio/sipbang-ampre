@@ -2,7 +2,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalManifesLabel">Data Manifes Baru</h5>
+        <h5 class="modal-title" id="modalManifesLabel"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -10,10 +10,12 @@
       <form method="post" action="<?= base_url('adding/manifes')?>">
         <div class="modal-body">
           
-          <div class="form-group">
+          <div class="form-group" id="divRef">
             <small>Nomor RKSP</small>
+            <input id="action" name="action" hidden>
+            <input id="ref_ubah" name="ref" disabled hidden>
             <div class="input-group-prepend">
-              <select class="custom-select" id="ref" name="ref" required>
+              <select class="custom-select" id="refManifes" name="ref" required>
                 <option value="" selected>Pilih</option>
                 <?php foreach ($ref as $r) :?>
                   <option value="<?= $r['ref'] ?>" <?php if(set_value('ref') == $r['ref']) echo "selected";?>><?= $r['nomor']?></option>
@@ -23,21 +25,21 @@
           </div>
 
           <div class="form-group">
-            <input type="text" class="form-control" id="nomor" name="nomor" placeholder="Nomor Manifes" maxlength="40" required>
+            <input type="text" class="form-control" id="nomorManifes" name="nomor" placeholder="Nomor Manifes" maxlength="40" required>
           </div>
 
           <div class="form-group">
             <small>Tanggal Manifes</small>
-            <input type="date" class="form-control" id="doc_date" name="doc_date" maxlength="11" value="<?= date('Y-m-d', time())?>" required>
+            <input type="date" class="form-control" id="doc_dateManifes" name="doc_date" maxlength="11" value="<?= date('Y-m-d', time())?>" required>
           </div>
           
           <div class="form-group">
             <small>Tanggal Kedatangan</small>
-            <input type="date" class="form-control" id="eta" name="eta" maxlength="11" value="<?= date('Y-m-d', time())?>" required>
+            <input type="date" class="form-control" id="etaManifes" name="eta" maxlength="11" value="<?= date('Y-m-d', time())?>" required>
           </div>
 
           <div class="form-group">
-            <input type="text" class="form-control" id="pos" name="pos" placeholder="Pos Manifes (pisahkan dengan koma)" maxlength="500">
+            <input type="text" class="form-control" id="posManifes" name="pos" placeholder="Pos Manifes (pisahkan dengan koma)" maxlength="500">
           </div>
 
         </div>

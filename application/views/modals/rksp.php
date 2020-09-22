@@ -11,6 +11,7 @@
         <div class="modal-body">
           
           <div class="form-group">
+            <input id="action" name="action" hidden value="add">
             <input type="text" class="form-control" id="nomor" name="nomor" placeholder="Nomor RKSP" maxlength="40" required>
           </div>
 

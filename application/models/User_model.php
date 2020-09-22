@@ -126,6 +126,7 @@ class User_model extends CI_Model
 	{
 		$ref = $data['ref'];
 		$nomor = $data['nomor'];
+		$jenis = $data['jenis'];
 		$doc_date = $data['doc_date'];
 		$eta = $data['eta'];
 		$pos = $data['pos'];
@@ -136,13 +137,13 @@ class User_model extends CI_Model
 		$query1 = "SELECT *
 					FROM `tracking`
 					WHERE `nomor` = '$nomor'
-					AND `jenis` = 'manifes'
+					AND `jenis` = '$jenis'
 					";
 		$result1 = $this->db->query($query1)->num_rows();
 
 		$query2 = "INSERT INTO `tracking`
 					(`ref`,`jenis`,`nomor`,`doc_date`,`eta`,`pos`,`user`,`name`,`stamp`)
-					VALUES ('$ref','manifes','$nomor',$doc_date,$eta,'$pos','$user','$name',$stamp)
+					VALUES ('$ref','$jenis','$nomor',$doc_date,$eta,'$pos','$user','$name',$stamp)
 					";
 
 		$query3 = "UPDATE `tracking` 
