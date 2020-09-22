@@ -82,8 +82,10 @@
                     <td><?= date('d/m/Y H:i', $p['stamp']);?></td>
                     <td>
                       <?php if ($p['filename'] == 'N'):?>
-                        <a href="#" class="badge badge-primary uploadDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalUpload">Upload</a>
+                        <a href="#" class="badge badge-primary uploadDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalUpload">Upload</a><br>
                       <?php endif;?>
+                      
+                      <a href="#" class="badge badge-warning ubahDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modal<?= $modal?>">Ubah</a>
                     </td>
                   </tr>
                 <?php endforeach;?>
@@ -131,6 +133,8 @@
                       <?php if ($p['filename'] == 'N'):?>
                         <a href="#" class="badge badge-primary uploadDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalUpload">Upload</a>
                       <?php endif;?>
+
+                      <a href="#" class="badge badge-warning ubahDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modal<?= $modal?>">Ubah</a>
                     </td>
                   </tr>
                 <?php endforeach;?>

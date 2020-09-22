@@ -78,6 +78,21 @@
         });
       });
 
+      $('.ubahDoc').on('click', function(){
+        const id = $(this).data('id');
+
+        $.ajax({
+          url: '<?= base_url('adding/gettracking/')?>' + id,
+          type: 'get',
+          dataType: 'JSON',
+          success: function(data) {
+              $('.modal-content form').attr('action', '<?= base_url('adding/rksp_ubah')?>');
+              $('#nomor').val(data.nomor);
+              $('#nomor').val(data.nomor);
+          }
+        });
+      });
+
       $('.acceptRKSP').on('click', function(){
         const id = $(this).data('id');
 

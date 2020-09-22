@@ -58,7 +58,8 @@ class Pengangkut extends CI_Controller
 			'user' => $this->user->getUser(),
 			'ref' => $this->user->getTrackings1('rksp'),
 			'refmanifes' => $this->user->getTrackings1('manifes'),
-			'documents' => $this->user->getTrackings('rksp', $page, $config['per_page'])
+			'documents' => $this->user->getTrackings('rksp', $page, $config['per_page']),
+			'modal' => "RKSP"
 		];
 
 		$this->config->load('pagination');
@@ -94,7 +95,8 @@ class Pengangkut extends CI_Controller
 			'user' => $this->user->getUser(),
 			'ref' => $this->user->getTrackings1('rksp'),
 			'refmanifes' => $this->user->getTrackings1('manifes'),
-			'documents' => $this->user->getTrackings('manifes', $page, $config['per_page'])
+			'documents' => $this->user->getTrackings('manifes', $page, $config['per_page']),
+			'modal' => "Manifes"
 		];
 
 		$this->config->load('pagination');
@@ -130,7 +132,8 @@ class Pengangkut extends CI_Controller
 			'user' => $this->user->getUser(),
 			'ref' => $this->user->getTrackings1('rksp'),
 			'refmanifes' => $this->user->getTrackings1('manifes'),
-			'documents' => $this->user->getTrackings('bongkar', $page, $config['per_page'])
+			'documents' => $this->user->getTrackings('bongkar', $page, $config['per_page']),
+			'modal' => "Bongkar"
 		];
 
 		$this->config->load('pagination');
