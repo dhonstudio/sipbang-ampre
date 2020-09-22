@@ -79,6 +79,18 @@
           </li>
         <?php endforeach;?>
 
+        <?php if ($user['sebagai'] == 'pegawai') :?>
+          <?php if ($subtitle == 'Tracking') :?>
+          <li class="nav-item active">
+          <?php else :?>
+          <li class="nav-item">
+          <?php endif;?>
+            <a class="nav-link font-weight-bold" href="#" data-toggle="modal" data-target="#modalTrack">
+              <i class="fas fa-fw fa-sitemap"></i>
+              <span>Tracking</span></a>
+          </li>
+        <?php endif;?>
+
       <!-- Divider -->
       <hr class="sidebar-divider">
 

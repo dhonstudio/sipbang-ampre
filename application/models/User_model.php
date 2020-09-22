@@ -14,6 +14,15 @@ class User_model extends CI_Model
 		return $this->db->query($query)->row_array();
 	}
 
+	public function getTracking($id)
+	{
+		$query = "SELECT *
+					FROM `tracking`
+					WHERE `id_tracking` = $id
+					";
+		return $this->db->query($query)->row_array();
+	}
+
 	public function getTrackings($jenis, $offset, $limit)
 	{
 		$user = $this->session->userdata('user');
@@ -229,5 +238,17 @@ class User_model extends CI_Model
 		$this->db->query($query2);
 		$this->db->query($query3);
 		return "<div class='alert alert-success' role='alert'>PIB berhasil ditambahkan</div>";
+	}
+
+	public function uploadDoc($data)
+	{
+		$id_tracking = $data['id_tracking'];
+		$filename = $data['filename'];
+
+		$query = "UPDATE `tracking` 
+					SET `filename`='$filename'
+					WHERE `id_tracking`=$id_tracking
+					";
+		$this->db->query($query);
 	}
 }

@@ -28,6 +28,7 @@
                   <form id="username" class="user" method="post" action="<?= base_url('auth');?><?php
                   if ($type == 'password') echo '/index/password/'.$username;
                   if ($type == 'reset') echo '/index/reset/'.$username;
+                  if ($type == 'change') echo '/changepassword/change/'.$username;
                   ?>">
 
                     <?php if($type == 'username'):?>
@@ -54,12 +55,12 @@
                     
                     <?php if($type != 'username'):?>
                       <div class="form-group">
-                        <input type="password" class="form-control py-4" id="pass" name="pass" placeholder="Kata Sandi" maxlength="20" value="<?= set_value('pass');?>">
+                        <input type="password" class="form-control py-4" id="pass" name="pass" placeholder="Kata Sandi <?php if ($type=='reset') echo 'Baru';?>" maxlength="20" value="<?= set_value('pass');?>">
                         <?= form_error('pass', '<small class="text-danger pl-3">', '</small>');?>
                       </div>
                     <?php endif;?>
                     
-                    <?php if($type == 'reset'):?>
+                    <?php if($type == 'reset' || $type == 'change'):?>
                       <div class="form-group">
                         <input type="password" class="form-control py-4" id="pass2" name="pass2" placeholder="Ulangi Kata Sandi" maxlength="20" value="">
                         <?= form_error('pass2', '<small class="text-danger pl-3">', '</small>');?>

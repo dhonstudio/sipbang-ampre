@@ -65,6 +65,7 @@ class TPS extends CI_Controller
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/documents', $data);
 		$this->load->view('modals/timbun');
+		$this->load->view('modals/upload');
 		$this->load->view('templates/footer');
 	}
 }

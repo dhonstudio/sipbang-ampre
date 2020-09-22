@@ -53,7 +53,7 @@
                         <th scope="col">Waktu Timbun</th>
                         <?php else:?>
                           <th scope="col">Doc Date</th>
-                        <?php endif;?>s
+                        <?php endif;?>
                     
                     <?php if ($subtitle == 'RKSP'):?>
                       <th scope="col">ETA</th>
@@ -83,7 +83,11 @@
 
                     <td><?= $p['name'];?></td>
                     <td><?= date('d/m/Y H:i', $p['stamp']);?></td>
-                    <td></td>
+                    <td>
+                      <?php if ($p['filename'] != 'N'):?>
+                        <a href="#" class="badge badge-primary fileDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalFile">File</a>
+                      <?php endif;?>
+                    </td>
                     <td>
                       <?php if ($subtitle == 'RKSP'):?>
 
@@ -111,7 +115,7 @@
 
                               <?php elseif ($subtitle == 'PIB'):?>
 
-                                <?php if ($this->user->numAccept($p['ref'], 'accept_pib') == 0) :?>
+                                <?php if ($this->user->numAccept($p['ref'], 'sppb') == 0) :?>
                                   <a href="#" class="badge badge-success acceptPIB" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Respon</a>
                                 <?php endif;?>
 
@@ -160,6 +164,9 @@
                         <?php endif;?>
 
                     <td>
+                      <?php if ($p['filename'] != 'N'):?>
+                        <a href="#" class="badge badge-primary fileDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalFile">File</a><br>
+                      <?php endif;?>
                       <?php if ($subtitle == 'RKSP'):?>
 
                         <?php if ($this->user->numAccept($p['ref'], 'accept_rksp') == 0) :?>
@@ -186,7 +193,7 @@
 
                               <?php elseif ($subtitle == 'PIB'):?>
 
-                                <?php if ($this->user->numAccept($p['ref'], 'accept_pib') == 0) :?>
+                                <?php if ($this->user->numAccept($p['ref'], 'sppb') == 0) :?>
                                   <a href="#" class="badge badge-success acceptPIB" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalAccept">Respon</a>
                                 <?php endif;?>
 

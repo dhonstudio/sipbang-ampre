@@ -72,6 +72,41 @@ class Auth extends CI_Controller {
 		}
 	}
 
+	public function changepassword($type, $username)
+	{
+		$user = $this->auth->getUser($username);
+
+		if (!$this->session->userdata('user')) redirect('auth');
+		if ($this->session->userdata('user') != $username) redirect('auth');
+
+		if ($type == 'change') {
+			$this->form_validation->set_rules('pass', 'Password', 'required|trim|min_length[3]', [
+				'required' => 'Kata sandi belum diisi',
+				'min_length' => 'Kata sandi terlalu pendek'
+			]);
+			$this->form_validation->set_rules('pass2', 'Password', 'trim|matches[pass]', [
+				'matches' => 'Kata sandi tidak cocok'
+			]);
+		}
+		
+		if($this->form_validation->run() == false){
+			$ip_address = $this->ip_address;
+			$data = [
+				'ncookies' => $this->auth->numCookies($ip_address),
+				'cookies' => $this->auth->getCookies($ip_address),
+				'title' => 'SIP Bang: Ubah Password',
+				'type' => $type,
+				'username' => $username,
+				'user' => $user
+			];
+			$this->load->view('templates/auth_header', $data);
+			$this->load->view('auth/login');
+			$this->load->view('templates/auth_footer');
+		} else {
+			if ($type == 'change') $this->_reset($username);
+		}
+	}
+
 	private function _login()
 	{
 		$vuser = $this->input->post('user');

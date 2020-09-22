@@ -80,7 +80,11 @@
                       <?php endif;?>
 
                     <td><?= date('d/m/Y H:i', $p['stamp']);?></td>
-                    <td></td>
+                    <td>
+                      <?php if ($p['filename'] == 'N'):?>
+                        <a href="#" class="badge badge-primary uploadDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalUpload">Upload</a>
+                      <?php endif;?>
+                    </td>
                   </tr>
                 <?php endforeach;?>
                 </tbody>
@@ -123,7 +127,11 @@
                           <td><?= date('d/m/Y', $p['eta']);?></td>
                         <?php endif;?>
 
-                    <td></td>
+                    <td>
+                      <?php if ($p['filename'] == 'N'):?>
+                        <a href="#" class="badge badge-primary uploadDoc" data-id="<?= $p['id_tracking'];?>" data-toggle="modal" data-target="#modalUpload">Upload</a>
+                      <?php endif;?>
+                    </td>
                   </tr>
                 <?php endforeach;?>
                 </tbody>

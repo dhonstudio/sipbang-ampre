@@ -32,6 +32,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/index', $data);
 		$this->load->view('modals/accept');
+		$this->load->view('modals/track');
 		$this->load->view('templates/footer');
 	}
 
@@ -60,6 +61,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
+		$this->load->view('modals/file');
 		$this->load->view('templates/footer');
 	}
 
@@ -88,6 +90,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
+		$this->load->view('modals/file');
 		$this->load->view('templates/footer');
 	}
 
@@ -116,6 +119,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
+		$this->load->view('modals/file');
 		$this->load->view('templates/footer');
 	}
 
@@ -144,6 +148,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
+		$this->load->view('modals/file');
 		$this->load->view('templates/footer');
 	}
 
@@ -172,6 +177,57 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
+		$this->load->view('modals/file');
+		$this->load->view('templates/footer');
+	}
+
+	public function sppb()
+	{
+		$config = [
+			'base_url' => base_url('pegawai/sppb'),
+			'total_rows' => $this->user->numTrackingsPegawai('sppb'),
+			'per_page' => 10
+		];
+
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data = [
+			'status' => $this->status,
+			'title' => "SIP Bang",
+			'subtitle' => "SPPB",
+			'maintitle' => "Data SPPB",
+			'page' => $page,
+			'pagination' => $this->pagination->create_links(),
+			'user' => $this->user->getUser(),
+			'documents' => $this->user->getTrackingsPegawai('sppb', $page, $config['per_page'])
+		];
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('bodies/documents_pegawai', $data);
+		$this->load->view('modals/accept');
+		$this->load->view('modals/file');
+		$this->load->view('templates/footer');
+	}
+
+	public function tracking()
+	{
+		$nomor = $this->input->post('nomor');
+		$jenis = $this->input->post('jenis');
+
+		$data = [
+			'status' => $this->status,
+			'title' => "SIP Bang",
+			'subtitle' => "Tracking",
+			'maintitle' => "Result for ".$jenis." nomor ".$nomor,
+			'user' => $this->user->getUser(),
+			'tracking' => $this->user->getTrackingsByNomor($nomor, $jenis)
+		];
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('bodies/tracking', $data);
 		$this->load->view('templates/footer');
 	}
 

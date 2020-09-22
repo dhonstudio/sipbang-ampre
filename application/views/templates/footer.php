@@ -46,6 +46,38 @@
     <script src="<?= base_url('assets');?>/vendor/sb-admin-2/js/sb-admin-2.min.js"></script>
 
     <script>
+      $('.custom-file-input').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+      })
+
+      $('.uploadDoc').on('click', function(){
+        const id = $(this).data('id');
+
+        $.ajax({
+          url: '<?= base_url('adding/gettracking/')?>' + id,
+          type: 'get',
+          dataType: 'JSON',
+          success: function(data) {
+              $('#id_tracking').val(data.id_tracking);
+              $('#modalUploadLabel').html('Upload Dokumen nomor '+data.nomor);
+          }
+        });
+      });
+
+      $('.fileDoc').on('click', function(){
+        const id = $(this).data('id');
+
+        $.ajax({
+          url: '<?= base_url('adding/gettracking/')?>' + id,
+          type: 'get',
+          dataType: 'JSON',
+          success: function(data) {
+              $('.modal-body iframe').attr('src', '<?= base_url('assets/img/doc/');?>'+data.filename);
+          }
+        });
+      });
+
       $('.acceptRKSP').on('click', function(){
         const id = $(this).data('id');
 
@@ -147,6 +179,7 @@
     </script>
 
     <script src="<?= base_url('assets');?>/js/script.js"></script>
+    <script src="<?= base_url('assets');?>/js/pdfobject.min.js"></script>
 
   </div>
 

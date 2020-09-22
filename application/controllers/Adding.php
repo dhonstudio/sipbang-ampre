@@ -134,4 +134,40 @@ class Adding extends CI_Controller
 		$this->session->set_flashdata('message',$alert);
 		redirect('importir/pib');
 	}
+
+	public function uploaddoc()
+	{
+		$user = $this->input->post('user');
+		$doc = $this->input->post('doc');
+
+		if ($_FILES['image']['name']) {
+			$config = [
+				'allowed_types'	=> 'pdf|gif|jpg|png|jpeg',
+				'max_size'		=> '2048',
+				'upload_path'	=> './assets/img/doc/',
+				'max_filename'	=> '50',
+				'encrypt_name' 	=> TRUE
+			];
+
+			$this->load->library('upload', $config);
+
+			if($this->upload->do_upload('image')){
+				$data = [
+					'id_tracking' => $this->input->post('id_tracking'),
+					'filename' => $this->upload->data('file_name'),
+				];
+				$this->user->uploadDoc($data);
+
+				redirect($user.'/'.$doc);
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors() . '</div>');
+				redirect($user.'/'.$doc);
+			}
+		}
+	}
+
+	public function gettracking($id)
+	{
+		echo json_encode($this->user->getTracking($id));
+	}
 }

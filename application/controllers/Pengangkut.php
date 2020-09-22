@@ -71,6 +71,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('modals/rksp');
 		$this->load->view('modals/manifes');
 		$this->load->view('modals/bongkar');
+		$this->load->view('modals/upload');
 		$this->load->view('templates/footer');
 	}
 
@@ -106,6 +107,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('modals/rksp');
 		$this->load->view('modals/manifes');
 		$this->load->view('modals/bongkar');
+		$this->load->view('modals/upload');
 		$this->load->view('templates/footer');
 	}
 
@@ -141,6 +143,7 @@ class Pengangkut extends CI_Controller
 		$this->load->view('modals/rksp');
 		$this->load->view('modals/manifes');
 		$this->load->view('modals/bongkar');
+		$this->load->view('modals/upload');
 		$this->load->view('templates/footer');
 	}
 }

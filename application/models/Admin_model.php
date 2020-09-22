@@ -34,6 +34,22 @@ class Admin_model extends CI_Model
 		return $this->db->query($query)->result_array();
 	}
 
+	public function getTrackingsByNomor($nomor, $jenis)
+	{
+		$query1 = "SELECT *
+					FROM `tracking`
+					WHERE `nomor` = '$nomor'
+					AND `jenis` = '$jenis'
+					";
+		$ref = $this->db->query($query1)->row_array()['ref'];
+
+		$query2 = "SELECT *
+					FROM `tracking`
+					WHERE `ref` = '$ref'
+					";
+		return $this->db->query($query2)->result_array();
+	}
+
 	public function numTrackingsPegawai($jenis)
 	{
 		$query = "SELECT *
