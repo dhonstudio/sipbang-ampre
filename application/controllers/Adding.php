@@ -95,6 +95,24 @@ class Adding extends CI_Controller
 		redirect('pengangkut/manifes');
 	}
 
+	public function tes()
+	{
+		$q = [5,6,7];
+		$r = '1,2,3';
+		$s[] = array($q,2,3);
+		$t = [1,2,3];
+		foreach(explode(",",$r) as $u[]) {
+		}
+
+		print_r($r);
+		echo '<br>';
+		print_r($s);
+		echo '<br>';
+		print_r($t);
+		echo '<br>';
+		print_r($u);
+	}
+
 	public function bongkar()
 	{
 		$data = [

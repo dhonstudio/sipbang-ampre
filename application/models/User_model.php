@@ -156,6 +156,18 @@ class User_model extends CI_Model
 					SET `jenis`='ubah_manifes'
 					WHERE `id_tracking`=$id
 					";
+
+		$query5 = "DELETE FROM `pos_manifes`
+					WHERE `ref`='$ref'
+					";
+
+		foreach(explode(",",$pos) as $p[]) {}
+		for($x = 0; $x < sizeof($p); $x++){
+		    $insertArray[] = array(
+		        'pos' => $p[$x],
+		        'ref' => $ref
+		    );
+		}
 		
 		$result1 = $this->db->query($query1)->num_rows();
 
@@ -163,6 +175,7 @@ class User_model extends CI_Model
 			if ($result1 == 0) {
 				$this->db->query($query2);
 				$this->db->query($query3);
+				$this->db->insert_batch('pos_manifes', $insertArray);
 				return "<div class='alert alert-success' role='alert'>Manifes berhasil ditambahkan</div>";
 			} else {
 				return "<div class='alert alert-danger' role='alert'>Manifes gagal ditambahkan, Manifes sudah pernah diinput</div>";
@@ -170,6 +183,8 @@ class User_model extends CI_Model
 		} else if ($action == 'edit') {
 			$this->db->query($query4);
 			$this->db->query($query2);
+			$this->db->query($query5);
+			$this->db->insert_batch('pos_manifes', $insertArray);
 			return "<div class='alert alert-success' role='alert'>Manifes berhasil diubah</div>";
 		}
 	}
