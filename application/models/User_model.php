@@ -125,8 +125,9 @@ class User_model extends CI_Model
 	public function insertManifes($data)
 	{
 		$ref = $data['ref'];
+		$id = $data['id'];
 		$nomor = $data['nomor'];
-		$jenis = $data['jenis'];
+		$action = $data['action'];
 		$doc_date = $data['doc_date'];
 		$eta = $data['eta'];
 		$pos = $data['pos'];
@@ -137,13 +138,12 @@ class User_model extends CI_Model
 		$query1 = "SELECT *
 					FROM `tracking`
 					WHERE `nomor` = '$nomor'
-					AND `jenis` = '$jenis'
+					AND `jenis` = 'manifes'
 					";
-		$result1 = $this->db->query($query1)->num_rows();
 
 		$query2 = "INSERT INTO `tracking`
 					(`ref`,`jenis`,`nomor`,`doc_date`,`eta`,`pos`,`user`,`name`,`stamp`)
-					VALUES ('$ref','$jenis','$nomor',$doc_date,$eta,'$pos','$user','$name',$stamp)
+					VALUES ('$ref','manifes','$nomor',$doc_date,$eta,'$pos','$user','$name',$stamp)
 					";
 
 		$query3 = "UPDATE `tracking` 
@@ -151,13 +151,26 @@ class User_model extends CI_Model
 					WHERE `ref`='$ref'
 					AND `jenis`='rksp'
 					";
+
+		$query4 = "UPDATE `tracking` 
+					SET `jenis`='ubah_manifes'
+					WHERE `id_tracking`=$id
+					";
 		
-		if ($result1 == 0) {
+		$result1 = $this->db->query($query1)->num_rows();
+
+		if ($action == 'add') {
+			if ($result1 == 0) {
+				$this->db->query($query2);
+				$this->db->query($query3);
+				return "<div class='alert alert-success' role='alert'>Manifes berhasil ditambahkan</div>";
+			} else {
+				return "<div class='alert alert-danger' role='alert'>Manifes gagal ditambahkan, Manifes sudah pernah diinput</div>";
+			}
+		} else if ($action == 'edit') {
+			$this->db->query($query4);
 			$this->db->query($query2);
-			$this->db->query($query3);
-			return "<div class='alert alert-success' role='alert'>Manifes berhasil ditambahkan</div>";
-		} else {
-			return "<div class='alert alert-danger' role='alert'>Manifes gagal ditambahkan, Manifes sudah pernah diinput</div>";
+			return "<div class='alert alert-success' role='alert'>Manifes berhasil diubah</div>";
 		}
 	}
 

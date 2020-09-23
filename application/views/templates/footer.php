@@ -92,8 +92,9 @@
         docdate = Date.parse(date) 
         $('#doc_dateManifes').val(GetFormattedDate(docdate));
         $('#etaManifes').val(GetFormattedDate(docdate));
-        $('#action').val('add');
+        $('#actionManifes').val('add');
         $('#ref_ubah').val('');
+        $('#idManifes').val('');
         document.getElementById("ref_ubah").disabled = true;
         document.getElementById("refManifes").disabled = false;
         document.getElementById("divRef").hidden = false;
@@ -113,8 +114,9 @@
               let docdate = data.doc_date*1000;
               $('#doc_dateManifes').val(GetFormattedDate(docdate));
               $('#etaManifes').val(GetFormattedDate(docdate));
-              $('#action').val('edit');
+              $('#actionManifes').val('edit');
               $('#ref_ubah').val(data.ref);
+              $('#idManifes').val(data.id_tracking);
               document.getElementById("ref_ubah").disabled = false;
               document.getElementById("refManifes").disabled = true;
               document.getElementById("divRef").hidden = true;

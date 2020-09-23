@@ -12,7 +12,8 @@
           
           <div class="form-group" id="divRef">
             <small>Nomor RKSP</small>
-            <input id="action" name="action" hidden>
+            <input id="idManifes" name="idManifes" hidden>
+            <input id="actionManifes" name="action" hidden>
             <input id="ref_ubah" name="ref" disabled hidden>
             <div class="input-group-prepend">
               <select class="custom-select" id="refManifes" name="ref" required>
