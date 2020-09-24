@@ -50,6 +50,20 @@ class Adding extends CI_Controller
 		redirect('pegawai/'.$accept);
 	}
 
+	public function reject($reject)
+	{
+		$data = [
+			'ref' => $this->input->post('ref'),
+			'accept' => 'reject_'.$reject,
+			'jenis' => $reject,
+			'doc_date' => time()
+		];
+		$this->admin->insertAccept($data);
+
+		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">Dokumen berhasil ditolak</div>');
+		redirect('pegawai/'.$reject);
+	}
+
 	public function acceptBongkar($accept)
 	{
 		$data = [

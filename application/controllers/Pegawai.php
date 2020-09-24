@@ -31,7 +31,6 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/index', $data);
-		$this->load->view('modals/accept');
 		$this->load->view('modals/track');
 		$this->load->view('templates/footer');
 	}
@@ -62,6 +61,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
 		$this->load->view('modals/file');
+		$this->load->view('modals/track');
 		$this->load->view('templates/footer');
 	}
 
@@ -90,7 +90,9 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
+		$this->load->view('modals/reject');
 		$this->load->view('modals/file');
+		$this->load->view('modals/track');
 		$this->load->view('templates/footer');
 	}
 
@@ -120,6 +122,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
 		$this->load->view('modals/file');
+		$this->load->view('modals/track');
 		$this->load->view('templates/footer');
 	}
 
@@ -149,6 +152,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
 		$this->load->view('modals/file');
+		$this->load->view('modals/track');
 		$this->load->view('templates/footer');
 	}
 
@@ -178,6 +182,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
 		$this->load->view('modals/file');
+		$this->load->view('modals/track');
 		$this->load->view('templates/footer');
 	}
 
@@ -207,6 +212,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('bodies/documents_pegawai', $data);
 		$this->load->view('modals/accept');
 		$this->load->view('modals/file');
+		$this->load->view('modals/track');
 		$this->load->view('templates/footer');
 	}
 
@@ -228,6 +234,7 @@ class Pegawai extends CI_Controller
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/tracking', $data);
+		$this->load->view('modals/track');
 		$this->load->view('templates/footer');
 	}
 

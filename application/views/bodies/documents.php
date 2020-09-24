@@ -70,7 +70,7 @@
                 <tbody>
                   <?php foreach ($documents as $p) : ?>
                   <tr>
-                    <td><?= $p['nomor'];?></td>
+                    <td><?= $p['nomor'];?> <?php if ($this->user->numAccept($p['ref'], 'accept_manifes') == 0 && $this->user->numAccept($p['ref'], 'reject_manifes') == 1) :?><b class="text-danger">(Ditolak)</b><?php endif;?></td>
                     <td><?= date('d F Y', $p['doc_date']);?></td>
 
                     <?php if ($subtitle == 'RKSP' || $subtitle == 'Manifes'):?>
@@ -123,7 +123,7 @@
                   <?php foreach ($documents as $p) : ?>
                   <tr>
                     <?php if ($subtitle == 'RKSP' || $subtitle == 'Manifes'):?>
-                      <td><b><?= $p['nomor'];?></b></td>
+                      <td><b><?= $p['nomor'];?></b> <?php if ($this->user->numAccept($p['ref'], 'accept_manifes') == 0 && $this->user->numAccept($p['ref'], 'reject_manifes') == 1) :?><b class="text-danger">(Ditolak)</b><?php endif;?></td>
                       <td><?= date('d/m/Y', $p['doc_date']);?></td>
                       <?php elseif ($subtitle == 'PIB'):?>
                         <td><b><?= $p['nomor'];?></b><br><?= date('d/m/Y', $p['doc_date']);?></td>

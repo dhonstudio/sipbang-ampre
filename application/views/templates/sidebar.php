@@ -33,11 +33,13 @@
         <li class="nav-item">
           <div class="dropdown">
             
-            <a class="nav-link font-weight-bold pt-2 pb-0 px-0 ml-2 mb-4" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <button type="button" class="btn btn-dark pl-4 pr-4">
-                <span>+ Baru</span>
-              </button>
-            </a>
+            <?php if ($user['level'] > 1):?>
+              <a class="nav-link font-weight-bold pt-2 pb-0 px-0 ml-2 mb-4" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn btn-dark pl-4 pr-4">
+                  <span>+ Baru</span>
+                </button>
+              </a>
+            <?php endif;?>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <?php

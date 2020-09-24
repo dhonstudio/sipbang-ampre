@@ -91,7 +91,8 @@ class Admin_model extends CI_Model
 					WHERE `ref`='$ref'
 					AND `jenis`='$jenis'
 					";
-		$this->db->query($query2);
+
+		if ($accept != 'reject_manifes') $this->db->query($query2);
 	}
 
 	public function insertAcceptBongkar($data)

@@ -160,6 +160,21 @@
         });
       });
 
+      $('.rejectManifes').on('click', function(){
+        const id = $(this).data('id');
+
+        $.ajax({
+          url: '<?= base_url('pegawai/gettracking/')?>' + id,
+          type: 'get',
+          dataType: 'JSON',
+          success: function(data) {
+              $('#refTolak').val(data.ref);
+              $('#modalRejectLabel').html('Tolak Dokumen Manifes nomor '+data.nomor);
+              $('.modal-content form').attr('action','<?= base_url('adding/reject/manifes')?>');
+          }
+        });
+      });
+
       $('.acceptBongkar').on('click', function(){
         const id = $(this).data('id');
 

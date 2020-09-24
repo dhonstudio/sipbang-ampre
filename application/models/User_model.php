@@ -92,6 +92,16 @@ class User_model extends CI_Model
 		return $this->db->query($query)->num_rows();
 	}
 
+	public function numAccept($ref, $jenis)
+	{
+		$query = "SELECT *
+					FROM `tracking`
+					WHERE `ref` = '$ref'
+					AND `jenis` = '$jenis'
+					";
+		return $this->db->query($query)->num_rows();
+	}
+
 	public function insertRKSP($data)
 	{
 		$ref = $data['ref'];
