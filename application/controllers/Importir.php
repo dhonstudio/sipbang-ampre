@@ -43,6 +43,8 @@ class Importir extends CI_Controller
 			'total_rows' => $this->user->numTrackings('pib'),
 			'per_page' => 10
 		];
+		$this->config->load('pagination');
+		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$data = [
@@ -56,9 +58,6 @@ class Importir extends CI_Controller
 			'refmanifes' => $this->user->getTrackings3('manifes'),
 			'documents' => $this->user->getTrackings('pib', $page, $config['per_page'])
 		];
-
-		$this->config->load('pagination');
-		$this->pagination->initialize($config);
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);

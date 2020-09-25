@@ -46,6 +46,8 @@ class Pengangkut extends CI_Controller
 			'total_rows' => $this->user->numTrackings('rksp'),
 			'per_page' => 10
 		];
+		$this->config->load('pagination');
+		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$data = [
@@ -61,9 +63,6 @@ class Pengangkut extends CI_Controller
 			'documents' => $this->user->getTrackings('rksp', $page, $config['per_page']),
 			'modal' => "RKSP"
 		];
-
-		$this->config->load('pagination');
-		$this->pagination->initialize($config);
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
@@ -83,6 +82,8 @@ class Pengangkut extends CI_Controller
 			'total_rows' => $this->user->numTrackings('manifes'),
 			'per_page' => 10
 		];
+		$this->config->load('pagination');
+		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$data = [
@@ -98,9 +99,6 @@ class Pengangkut extends CI_Controller
 			'documents' => $this->user->getTrackings('manifes', $page, $config['per_page']),
 			'modal' => "Manifes"
 		];
-
-		$this->config->load('pagination');
-		$this->pagination->initialize($config);
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
@@ -120,6 +118,8 @@ class Pengangkut extends CI_Controller
 			'total_rows' => $this->user->numTrackings('bongkar'),
 			'per_page' => 10
 		];
+		$this->config->load('pagination');
+		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$data = [
@@ -135,9 +135,6 @@ class Pengangkut extends CI_Controller
 			'documents' => $this->user->getTrackings('bongkar', $page, $config['per_page']),
 			'modal' => "Bongkar"
 		];
-
-		$this->config->load('pagination');
-		$this->pagination->initialize($config);
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);

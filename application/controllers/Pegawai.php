@@ -42,6 +42,8 @@ class Pegawai extends CI_Controller
 			'total_rows' => $this->user->numTrackingsPegawai('rksp'),
 			'per_page' => 10
 		];
+		$this->config->load('pagination');
+		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$data = [
@@ -72,6 +74,8 @@ class Pegawai extends CI_Controller
 			'total_rows' => $this->user->numTrackingsPegawai('manifes'),
 			'per_page' => 10
 		];
+		$this->config->load('pagination');
+		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$data = [
@@ -103,6 +107,8 @@ class Pegawai extends CI_Controller
 			'total_rows' => $this->user->numTrackingsPegawai('bongkar'),
 			'per_page' => 10
 		];
+		$this->config->load('pagination');
+		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$data = [
@@ -133,6 +139,8 @@ class Pegawai extends CI_Controller
 			'total_rows' => $this->user->numTrackingsPegawai('timbun'),
 			'per_page' => 10
 		];
+		$this->config->load('pagination');
+		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$data = [
@@ -163,6 +171,8 @@ class Pegawai extends CI_Controller
 			'total_rows' => $this->user->numTrackingsPegawai('pib'),
 			'per_page' => 10
 		];
+		$this->config->load('pagination');
+		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$data = [
@@ -193,6 +203,8 @@ class Pegawai extends CI_Controller
 			'total_rows' => $this->user->numTrackingsPegawai('sppb'),
 			'per_page' => 10
 		];
+		$this->config->load('pagination');
+		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$data = [
