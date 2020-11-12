@@ -7,7 +7,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="<?= base_url('pegawai/tracking')?>">
+      <form method="post" action="<?= base_url('').$this->cont.'/tracking';?>">
         <div class="modal-body">
 
           <div class="form-group">

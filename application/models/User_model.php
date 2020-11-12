@@ -65,9 +65,31 @@ class User_model extends CI_Model
 		$query = "SELECT *
 					FROM `tracking`
 					WHERE `jenis` = '$jenis'
-					AND `next` = 5
 					";
 		return $this->db->query($query)->result_array();
+	}
+
+	public function getTrackingsByNomor($nomor, $jenis)
+	{
+		$user = $this->getUser()['user'];
+
+		$query1 = "SELECT *
+					FROM `tracking`
+					WHERE `nomor` = '$nomor'
+					AND `jenis` = '$jenis'
+					AND `user` = '$user'
+					";
+		if ($this->db->query($query1)->row_array()) {
+			$ref = $this->db->query($query1)->row_array()['ref'];
+		} else {
+			$ref = 0;
+		}
+
+		$query2 = "SELECT *
+					FROM `tracking`
+					WHERE `ref` = '$ref'
+					";
+		return $this->db->query($query2)->result_array();
 	}
 
 	public function getManifes($ref)

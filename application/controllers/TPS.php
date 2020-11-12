@@ -15,6 +15,8 @@ class Tps extends CI_Controller
 		$this->load->library('pagination');
 		$this->load->library('form_validation');
 		$this->load->model('User_model', 'user');
+
+		$this->cont = "tps";
 	}
 
 	public function index()
@@ -33,6 +35,28 @@ class Tps extends CI_Controller
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('bodies/index', $data);
 		$this->load->view('modals/timbun');
+		$this->load->view('templates/footer');
+	}
+
+	public function tracking()
+	{
+		$nomor = $this->input->post('nomor');
+		$jenis = $this->input->post('jenis');
+
+		$data = [
+			'status' => $this->status,
+			'title' => "SIP Bang",
+			'subtitle' => "Tracking",
+			'maintitle' => "Result for ".$jenis." nomor ".$nomor,
+			'user' => $this->user->getUser(),
+			'tracking' => $this->user->getTrackingsByNomor($nomor, $jenis)
+		];
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('bodies/tracking', $data);
+		$this->load->view('modals/track');
 		$this->load->view('templates/footer');
 	}
 

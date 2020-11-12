@@ -81,7 +81,7 @@
           </li>
         <?php endforeach;?>
 
-        <?php if ($user['sebagai'] == 'pegawai') :?>
+        
           <?php if ($subtitle == 'Tracking') :?>
           <li class="nav-item active">
           <?php else :?>
@@ -91,7 +91,6 @@
               <i class="fas fa-fw fa-sitemap"></i>
               <span>Tracking</span></a>
           </li>
-        <?php endif;?>
 
       <!-- Divider -->
       <hr class="sidebar-divider">

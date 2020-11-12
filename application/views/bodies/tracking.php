@@ -36,7 +36,7 @@
                   <tr>
                     <td><img width="20px" src="<?= base_url('assets/img/');?>track.png"></td>
                     <td><?= date('d F Y', $p['stamp']);?></td>
-                    <td><b><?= $p['name'];?></b></td>
+                    <td><b><?php if (is_numeric($p['user']) == 1) echo "KPPBC Amamapare"; else echo $p['name'];?></b></td>
                     <td><?= $stat?></td>
                   </tr>
                 <?php endforeach;?>

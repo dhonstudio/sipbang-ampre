@@ -41,7 +41,11 @@ class Admin_model extends CI_Model
 					WHERE `nomor` = '$nomor'
 					AND `jenis` = '$jenis'
 					";
-		$ref = $this->db->query($query1)->row_array()['ref'];
+		if ($this->db->query($query1)->row_array()) {
+			$ref = $this->db->query($query1)->row_array()['ref'];
+		} else {
+			$ref = 0;
+		}
 
 		$query2 = "SELECT *
 					FROM `tracking`
