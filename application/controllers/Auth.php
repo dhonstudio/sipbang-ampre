@@ -25,6 +25,7 @@ class Auth extends CI_Controller {
 			if($sebagai == 'pengangkut') redirect('pengangkut');
 			if($sebagai == 'tps') redirect('tps');
 			if($sebagai == 'importir') redirect('importir');
+			if($sebagai == 'ppjk') redirect('importir');
 		}
 
 		if ($type == 'username') $this->form_validation->set_rules('user', 'Username', 'required|trim', ['required' => 'Username belum diisi']);
